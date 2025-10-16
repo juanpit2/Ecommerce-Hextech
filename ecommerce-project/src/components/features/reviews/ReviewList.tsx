@@ -56,7 +56,7 @@ const ReviewList: React.FC = () => {
                     onClick={() => scrollNext(-1)}
                     className="hidden md:flex items-center justify-center w-10 h-10 bg-white/80 rounded-full shadow absolute left-0 top-1/2 -translate-y-1/2 z-10"
                 >
-                    ‹
+                    
                 </button>
 
                 <button
@@ -64,7 +64,7 @@ const ReviewList: React.FC = () => {
                     onClick={() => scrollNext(1)}
                     className="hidden md:flex items-center justify-center w-10 h-10 bg-white/80 rounded-full shadow absolute right-0 top-1/2 -translate-y-1/2 z-10"
                 >
-                    ›
+                    
                 </button>
 
                 <div
