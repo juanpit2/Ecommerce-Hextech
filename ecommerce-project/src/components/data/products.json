@@ -5,7 +5,7 @@
     "price": 1000,
     "currency": "GLD",
     "rating": 4.5,
-    "image": "/assets/images/Group150.jpg",
+    "image": "/public/images/card-libro.png",
     "description": "An ancient tome of Hextech knowledge — blueprints, runes, and secrets for mastering crystal energy."
   },
   {
@@ -14,7 +14,7 @@
     "price": 60500,
     "currency": "GLD",
     "rating": 4.5,
-    "image": "/assets/images/Group151.jpg",
+    "image": "/public/images/card-cristals.png",
     "description": "The heart of Hextech innovation — pure, stabilized energy ready for crafting or power."
   },
   {
@@ -23,7 +23,7 @@
     "price": 21200,
     "currency": "GLD",
     "rating": 4.5,
-    "image": "/assets/images/Group168.jpg",
+    "image": "/public/images/card-cofre.png",
     "description": "A reinforced container designed to hold unstable Hextech crystals with maximum safety and elegance."
   },
   {
@@ -32,7 +32,7 @@
     "price": 300500,
     "currency": "GLD",
     "rating": 4.5,
-    "image": "/assets/images/orianna.jpg",
+    "image": "/public/images/card-orianna.png",
     "description": "A masterful automaton built with grace and precision — elegance fused with Hextech."
   },
   {
@@ -41,7 +41,7 @@
     "price": 10300,
     "currency": "GLD",
     "rating": 4.5,
-    "image": "/assets/images/pirate_gun.jpg",
+    "image": "/public/images/card-gun.png",
     "description": "A sleek, finely tuned firearm combining Hextech precision with timeless design."
   },
   {
@@ -50,8 +50,8 @@
     "price": 9850,
     "currency": "GLD",
     "rating": 4.5,
-    "image": "/assets/images/hextech_pistol.jpg",
-    "description": "Compact, efficient, and deadly accurate — Piltover’s answer to quick encounters."
+    "image": "/public/images/card-pistol.png",
+    "description": "Compact, efficient, and deadly accurate — Piltover's answer to quick encounters."
   },
   {
     "id": 7,
@@ -59,7 +59,7 @@
     "price": 9800,
     "currency": "GLD",
     "rating": 4.5,
-    "image": "/assets/images/atlas_gauntlets.jpg",
+    "image": "/public/images/Card-guante.png",
     "description": "Boost your strength with Hextech power. Raw force in a single punch."
   },
   {
@@ -68,7 +68,7 @@
     "price": 14500,
     "currency": "GLD",
     "rating": 4.5,
-    "image": "/assets/images/precision_rifle.jpg",
+    "image": "/public/images/card-rifle.png",
     "description": "Piltover-grade precision for one-shot clarity. Lawful, lethal, and beautifully engineered."
   },
   {
@@ -77,7 +77,7 @@
     "price": 11200,
     "currency": "GLD",
     "rating": 4.5,
-    "image": "/assets/images/transforming_warhammer.jpg",
+    "image": "/public/images/card-mazo.png",
     "description": "Turn intellect into impact — a masterfully engineered warhammer that shifts between brute force and precision engineering."
   }
 ]
