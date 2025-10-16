@@ -2,7 +2,6 @@ import './App.css'
 import Navbar from './components/layout/Header'
 import LandingCarousel from './components/layout/LandingCarousel'
 import ProductGrid from "./components/features/products/ProductGrid";
-// import ReviewCard from './components/features/reviews/ReviewCard'; // ya no es necesario
 import ReviewList from './components/features/reviews/ReviewList';
 
 function App() {

@@ -23,20 +23,25 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ name, rating, description }) =>
     const filledStars = Math.max(0, Math.min(5, Math.round(rating)));
 
     return (
-        <article className="relative rounded-2xl border-2 border-[#E6C84A] bg-[#FFF8C4] text-[#1f1f1f] p-8 w-full shadow-sm min-h-[180px]">
+        <article className="relative rounded-2xl border-2 border-[#E6C84A] bg-[#FFF8C4] text-[#1f1f1f] p-8 shadow-sm h-full flex flex-col min-w-[300px] max-w-[720px]">
+            {/* avatar absolute so it overlaps left padding */}
             <div className="absolute top-6 left-6">
                 <div className="w-14 h-14 rounded-full bg-[#F9E58A] flex items-center justify-center text-sm font-semibold text-[#2b2b2b] shadow-sm">
                     {initials || "?"}
                 </div>
             </div>
 
-            <div className="ml-20 pr-6">
+            {/* content: leave space for avatar with ml */}
+            <div className="ml-20 pr-4 flex-1 flex flex-col">
                 <div className="text-sm font-semibold text-[#2b2b2b] mb-3">@{name}</div>
 
-                <p className="text-lg leading-relaxed text-[#2b2b2b] mb-10">“{description}”</p>
+                <p className="text-lg leading-relaxed text-[#2b2b2b] mb-4 flex-1 overflow-auto">
+                    “{description}”
+                </p>
 
-                <div className="absolute right-6 bottom-6 flex items-center gap-3">
-                    <div className="flex gap-1">
+                {/* footer with rating aligned to the right */}
+                <div className="flex items-center justify-end gap-3 mt-2">
+                    <div className="flex gap-2">
                         {Array.from({ length: 5 }).map((_, i) => (
                             <Star key={i} filled={i < filledStars} />
                         ))}
