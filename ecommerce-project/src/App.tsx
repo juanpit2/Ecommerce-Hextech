@@ -1,12 +1,15 @@
 import './App.css'
 import Navbar from './components/layout/Header'
+import LandingCarousel from './components/layout/LandingCarousel'
 
 function App() {
 
   return (
-    <>
-      <h1 className='bg-blue-500  sm:bg-red-500 hover:bg-yellow-100'>Hola Tailwind!</h1>
-      <Navbar />
+    <>  
+      <div className="pt-60 max-sm:pt-20 space-y-20 max-sm:space-y-8">
+        <Navbar />
+        <LandingCarousel />
+      </div>
     </>
   )
 }
