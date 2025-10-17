@@ -5,6 +5,7 @@ import LandingCarousel from './components/layout/LandingCarousel'
 import ProductGrid from "./components/features/products/ProductGrid";
 import ReviewList from './components/features/reviews/ReviewList';
 import Sections from './components/layout/Sections';
+import ZaunLayout from './components/layout/Zaun';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <div className="max-w-6xl mx-auto px-4">
           <ReviewList />
         </div>
+        <ZaunLayout />
       </div>
     </>
   )
