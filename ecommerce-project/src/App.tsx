@@ -1,6 +1,7 @@
 import './App.css'
 import Functionalities from './components/layout/Functionalities'
 import Navbar from './components/layout/Header'
+import ProductGrid from "./components/features/products/ProductGrid";
 import LandingCarousel from './components/layout/LandingCarousel'
 import Sections from './components/layout/Sections'
 
