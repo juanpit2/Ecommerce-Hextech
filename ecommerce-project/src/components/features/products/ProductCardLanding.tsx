@@ -1,5 +1,5 @@
 import React from "react";
-
+import { NavLink } from "react-router-dom"
 interface Product {
   id: number;
   name: string;
@@ -58,9 +58,12 @@ const ProductCardLanding: React.FC<ProductCardLandingProps> = ({ product }) => {
       </div>
 
       {/* Botón con más sombra clara (más a la izquierda) */}
+      <NavLink to={"/Products"} >
       <button className="bg-[#2c4de2] hover:bg-[#1e37b6] text-white text-sm font-semibold py-2.5 px-8 rounded-[10px] shadow-[0_4px_20px_rgba(80,130,255,0.7)] transition duration-300 translate-x-[-50px]">
         Buy now
+        
       </button>
+      </NavLink>
     </div>
   );
 };

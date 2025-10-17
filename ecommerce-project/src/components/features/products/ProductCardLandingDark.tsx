@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom"
 
 interface Product {
   id: number;
@@ -69,9 +70,11 @@ const ProductCardLandingDark: React.FC<Props> = ({ product }) => {
       </div>
 
       {/* Botón con glow claro */}
+      <NavLink to={"/ProductsZaun"} >
       <button className="bg-[#2b0073] hover:bg-[#20005a] text-white text-sm font-semibold py-2.5 px-8 rounded-[8px] shadow-[0_6px_20px_rgba(180,100,255,0.45)] transition duration-300 translate-x-[-50px]">
         Buy now
       </button>
+      </NavLink>
     </div>
   );
 };
