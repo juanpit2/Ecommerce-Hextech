@@ -1,5 +1,4 @@
 import './App.css'
-import React from "react";
 import Navbar from './components/layout/Header'
 import LandingCarousel from './components/layout/LandingCarousel'
 import ReviewList from './components/features/reviews/ReviewList';
@@ -26,6 +25,7 @@ function App() {
         <div className="max-w-6xl mx-auto px-4">
           <ReviewList />
         </div>
+        <ZaunLayout />
         <Footer />
       </div>
     </>
