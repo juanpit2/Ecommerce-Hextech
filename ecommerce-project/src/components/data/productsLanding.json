@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Infinity Gauntlet",
+    "image": "/public/images/Card-guante.png",
+    "price": 9800,
+    "rating": 4.5,
+    "style": "w-[20px] left-[-5px] bottom-28"
+    
+  },
+  {
+    "id": 2,
+    "name": "Golden Rifle",
+    "image": "/public/images/card-rifle.png",
+    "price": 14500,
+    "rating": 4.5
+  },
+  {
+    "id": 3,
+    "name": "Thunder Hammer",
+    "image":"/public/images/card-mazo.png",
+    "price": 11200,
+    "rating": 4.5
+  },
+  {
+    "id": 4,
+    "name": "Pulse Blaster",
+    "image": "/public/images/card-pistol.png",
+    "price": 9850,
+    "rating": 4.5
+  }
+]
