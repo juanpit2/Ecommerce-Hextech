@@ -10,6 +10,7 @@ interface Product {
 
 interface ProductCardLandingProps {
   product: Product;
+  theme?: "light" | "dark";
 }
 
 const ProductCardLanding: React.FC<ProductCardLandingProps> = ({ product }) => {
