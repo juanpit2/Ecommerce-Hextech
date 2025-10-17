@@ -1,5 +1,5 @@
 import './App.css'
-import Functionalities from './components/layout/Functionalities'
+import React from "react";
 import Navbar from './components/layout/Header'
 import LandingCarousel from './components/layout/LandingCarousel'
 import ProductGrid from "./components/features/products/ProductGrid";
@@ -20,8 +20,9 @@ function App() {
         </div>
         <Footer />
       </div>
+    </div>
     </>
-  )
-}
 
-export default App
+  );
+};
+export default App;

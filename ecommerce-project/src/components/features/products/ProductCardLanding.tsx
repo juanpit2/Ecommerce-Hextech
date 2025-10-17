@@ -4,48 +4,65 @@ interface Product {
   id: number;
   name: string;
   price: number;
-  rating: number;
   image: string;
+  rating: number;
 }
 
 interface ProductCardLandingProps {
   product: Product;
+  theme?: "light" | "dark";
 }
 
 const ProductCardLanding: React.FC<ProductCardLandingProps> = ({ product }) => {
-  const { name, price, rating, image } = product;
-
   return (
-    <div className="relative bg-gradient-to-b from-[#1B1361] to-[#0E0F2C] text-white rounded-2xl p-6 w-[260px] shadow-xl flex flex-col justify-between transition-transform duration-300 hover:-translate-y-2">
-      {/* Imagen del producto */}
-      <div className="flex items-center justify-center mb-4 mt-4">
-        <img src={image} alt={name} className="w-44 h-44 object-contain" />
+    <div className="relative bg-gradient-to-b from-[#1a1646] to-[#241e64] rounded-[22px] shadow-lg p-6 w-[260px] h-[320px] flex flex-col items-center justify-end overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-2xl duration-300">
+      {/* Glow / sombra difusa más viva */}
+      <div
+        className="absolute top-[50%] left-[20%] w-[200px] h-[120px] rounded-full blur-[70px] opacity-90 -translate-y-1/2"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(255,180,50,0.9) 0%, rgba(255,120,0,0.4) 100%)",
+        }}
+      ></div>
+            {/* Círculo del precio */}
+      <div className="absolute right-5 top-25 bg-[#1ee4cf] text-[#0a1033] font-bold text-lg rounded-full w-[95px] h-[95px] flex flex-col items-center justify-center shadow-[0_0_18px_rgba(30,228,207,0.9)]">
+        <p className="text-sm font-semibold">Price</p>
+        <p>
+          {product.price.toLocaleString()}
+          <br />
+          GLD
+        </p>
       </div>
 
-      {/* Círculo del precio */}
-      <div className="absolute right-4 top-4 bg-[#20D0C2] text-[#1A155A] font-semibold rounded-full w-[90px] h-[90px] flex flex-col items-center justify-center text-center">
-        <span className="text-xs">Price</span>
-        <span className="text-lg font-bold">{price.toLocaleString()}</span>
-        <span className="text-[10px]">GLD</span>
+
+      {/* Imagen del producto (más arriba y más a la izquierda) */}
+      <img
+  src={product.image}
+  alt={product.name}
+  className={`absolute object-contain drop-shadow-[0_25px_40px_rgba(0,0,0,0.55)] ${
+    product.id === 1
+      ? "w-[260px]  h-[300px] left-[-35px] bottom-10"
+      : product.id === 2
+      ? "w-[500px] h-[500px]left-2 bottom-25"
+      : product.id === 3
+      ? "w-[250px] left-0 bottom-20"
+      : "w-[500px]  left-[-10px] bottom-30 rotate-[-20deg]"
+  }`}
+/>
+
+
+      {/* Rating dentro de rectángulo más redondeado (más a la izquierda) */}
+      <div className="flex items-center justify-center gap-1 bg-white rounded-[20px] py-1.5 px-4 mt-auto mb-3 shadow-md translate-x-[-35px]">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <span key={i} className="text-yellow-400 text-lg leading-none">
+            ★
+          </span>
+        ))}
+        <span className="text-gray-700 text-sm ml-1">{product.rating}</span>
       </div>
 
-      {/* Nombre del producto */}
-      <h3 className="text-lg font-bold mt-4">{name}</h3>
-
-      {/* Rating con estrellas */}
-      <div className="flex items-center gap-2 mt-2">
-        <div className="flex">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <span key={i} className="text-yellow-400 text-lg">
-              {i < Math.floor(rating) ? "★" : "☆"}
-            </span>
-          ))}
-        </div>
-        <span className="text-sm font-medium">{rating}</span>
-      </div>
-
-      {/* Botón */}
-      <button className="mt-4 w-full bg-gradient-to-b from-[#2EB7E5] to-[#1C6CE5] hover:opacity-90 text-white font-semibold py-2 rounded-lg transition">
+      {/* Botón con más sombra clara (más a la izquierda) */}
+      <button className="bg-[#2c4de2] hover:bg-[#1e37b6] text-white text-sm font-semibold py-2.5 px-8 rounded-[10px] shadow-[0_4px_20px_rgba(80,130,255,0.7)] transition duration-300 translate-x-[-50px]">
         Buy now
       </button>
     </div>
@@ -53,4 +70,3 @@ const ProductCardLanding: React.FC<ProductCardLandingProps> = ({ product }) => {
 };
 
 export default ProductCardLanding;
-
