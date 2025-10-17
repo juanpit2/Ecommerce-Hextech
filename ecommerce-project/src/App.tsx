@@ -1,9 +1,9 @@
 import './App.css'
-import React from "react";
 import Navbar from './components/layout/Header'
 import LandingCarousel from './components/layout/LandingCarousel'
 import ReviewList from './components/features/reviews/ReviewList';
 import Sections from './components/layout/Sections';
+import ZaunLayout from './components/layout/Zaun';
 import Footer from './components/layout/Footer';
 import Functionalities from './components/layout/Functionalities';
 import ProductCardLanding from './components/features/products/ProductCardLanding';
@@ -25,6 +25,7 @@ function App() {
         <div className="max-w-6xl mx-auto px-4">
           <ReviewList />
         </div>
+        <ZaunLayout />
         <Footer />
       </div>
     </>
