@@ -23,7 +23,7 @@ export default function ZaunLayout() {
             
             {/* Recently added */}
             <div className="space-y-6">
-              <h2 className="text-white/90 text-sm md:text-base font-medium">
+              <h2 className="text-white/90 text-2xl font-bold mb-6">
                 Recently added
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -35,7 +35,7 @@ export default function ZaunLayout() {
 
             {/* Feature products */}
             <div className="space-y-6">
-              <h2 className="text-white/90 text-sm md:text-base font-medium">
+              <h2 className="text-white/90 text-2xl font-bold mb-6">
                 Feature products
               </h2>
 

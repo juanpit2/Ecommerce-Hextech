@@ -18,10 +18,11 @@ function App() {
         <Sections />
         <Functionalities />
         <div className="flex flex-wrap justify-center gap-6 p-6">
-        {products.map((product) => (
-          <ProductCardLanding key={product.id} product={product} />
-        ))}
+          {products.map((product) => (
+            <ProductCardLanding key={product.id} product={product} />
+          ))}
         </div>
+
         <div className="max-w-6xl mx-auto px-4">
           <ReviewList />
         </div>

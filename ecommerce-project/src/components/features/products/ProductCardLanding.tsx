@@ -15,6 +15,7 @@ interface ProductCardLandingProps {
 
 const ProductCardLanding: React.FC<ProductCardLandingProps> = ({ product }) => {
   return (
+    <div>
     <div className="relative bg-gradient-to-b from-[#1a1646] to-[#241e64] rounded-[22px] shadow-lg p-6 w-[260px] h-[320px] flex flex-col items-center justify-end overflow-hidden transition-transform hover:-translate-y-1 duration-300">
       <div
         className="absolute top-[50%] left-[20%] w-[200px] h-[120px] rounded-full blur-[70px] opacity-90 -translate-y-1/2"
@@ -61,6 +62,7 @@ const ProductCardLanding: React.FC<ProductCardLandingProps> = ({ product }) => {
       <button className="bg-[#2c4de2] hover:bg-[#1e37b6] text-white text-sm font-semibold py-2.5 px-8 rounded-[10px] shadow-[0_4px_20px_rgba(80,130,255,0.7)] transition duration-300 translate-x-[-50px]">
         Buy now
       </button>
+    </div>
     </div>
   );
 };
