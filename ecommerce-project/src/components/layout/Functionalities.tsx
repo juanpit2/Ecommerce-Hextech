@@ -9,19 +9,19 @@ export default function Functionalities() {
             <div className="relative flex items-center justify-center gap-5">
                 <div>
                     <img src={viF} alt="" className="mx-auto block object-contain max-w-full
-                    max-sm:max-w-[180px] max-sm:max-h-[180px] transform transition-transform duration-200 ease-in-out hover:scale-105 focus-visible:scale-105 cursor-pointer"/>
+                    max-sm:max-w-[120px] max-sm:max-h-[120px] transform transition-transform duration-200 ease-in-out hover:scale-105 focus-visible:scale-105 cursor-pointer"/>
                 </div>
                 <div className="mt-12">
                     <img src={jinxF} alt="" className="mx-auto block object-contain max-w-full
-                    max-sm:max-w-[180px] max-sm:max-h-[180px] transform transition-transform duration-200 ease-in-out hover:scale-105 focus-visible:scale-105 cursor-pointer"/>
+                    max-sm:max-w-[120px] max-sm:max-h-[120px] transform transition-transform duration-200 ease-in-out hover:scale-105 focus-visible:scale-105 cursor-pointer"/>
                 </div>
                 <div>
                     <img src={caitF} alt="" className="mx-auto block object-contain max-w-full
-                    max-sm:max-w-[180px] max-sm:max-h-[180px] transform transition-transform duration-200 ease-in-out hover:scale-105 focus-visible:scale-105 cursor-pointer"/>
+                    max-sm:max-w-[120px] max-sm:max-h-[120px] transform transition-transform duration-200 ease-in-out hover:scale-105 focus-visible:scale-105 cursor-pointer"/>
                 </div>
                 <div className="mt-12">
                     <img src={ekkoF} alt="" className="mx-auto block object-contain max-w-full
-                    max-sm:max-w-[180px] max-sm:max-h-[180px] transform transition-transform duration-200 ease-in-out hover:scale-105 focus-visible:scale-105 cursor-pointer"/>
+                    max-sm:max-w-[120px] max-sm:max-h-[120px] transform transition-transform duration-200 ease-in-out hover:scale-105 focus-visible:scale-105 cursor-pointer"/>
                 </div>
             </div>
         </>
