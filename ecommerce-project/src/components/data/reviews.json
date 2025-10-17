@@ -1,0 +1,50 @@
+[
+    {
+    "id": "r1",
+    "name": "Blessd",
+    "rating": 5,
+    "description": "Smashed a collapsed support beam and then switched to Tool Mode to realign the gears—engineering and destruction in one tool. Jayce did not disappoint."
+    },
+    {
+    "id": "r2",
+    "name": "PanHuevito",
+    "rating": 5,
+    "description": "Beautiful and terrifying. Biometric lock saved me when a thief tried to use it, but the sight crystals are pricey to replace."
+    },
+    {
+    "id": "r3",
+    "name": "ArcaneSmith",
+    "rating": 4,
+    "description": "Sturdy build, excellent precision. Took a while to get used to the dual-mode controls but worth it."
+    },
+    {
+    "id": "r4",
+    "name": "MiraCraft",
+    "rating": 5,
+    "description": "The tool saved me on a mining run — modular attachments are genius. Highly recommended."
+    },
+    {
+    "id": "r5",
+    "name": "RogueTinker",
+    "rating": 4,
+    "description": "Great power and compact. Wish the battery lasted longer, otherwise perfect."
+    },
+    {
+    "id": "r6",
+    "name": "LunaForge",
+    "rating": 5,
+    "description": "Design and function combined. The biometric lock is a life-saver and looks great on my bench."
+    },
+    {
+    "id": "r7",
+    "name": "HexMerchant",
+    "rating": 3,
+    "description": "Good for specialized jobs but expensive to maintain if used daily."
+    } ,
+    {
+    "id": "r8",
+    "name": "TinkerTao",
+    "rating": 5,
+    "description": "Absolutely love it. Swappable heads make it my go-to for every build."
+    }
+]
