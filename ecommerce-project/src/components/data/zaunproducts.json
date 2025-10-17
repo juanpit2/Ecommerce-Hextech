@@ -1,0 +1,34 @@
+[
+    {
+    "id": "p1",
+    "name": "Hextech Grenade",
+    "price": 3800,
+    "currency": "GLD",
+    "image": "/public/images/zug.svg",
+    "rating": 4.5
+    },
+    {
+    "id": "p2",
+    "name": "Fishbones",
+    "price": 12500,
+    "currency": "GLD",
+    "image": "/public/images/fishbones.svg",
+    "rating": 4.5
+    },
+    {
+    "id": "p3",
+    "name": "Shimmer",
+    "price": 1000,
+    "currency": "GLD",
+    "image": "/public/images/shimmer.svg",
+    "rating": 4.5
+    },
+    {
+    "id": "p4",
+    "name": "Pow-Pow",
+    "price": 18700,
+    "currency": "GLD",
+    "image": "/public/images/powpow.svg",
+    "rating": 4.5
+    }
+]
