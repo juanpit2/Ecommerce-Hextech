@@ -6,6 +6,7 @@ import lupa from "../../../public/images/icons/startContent.svg"
 
 // Importación de hooks de React para manejo de estado, referencias y efectos
 import { useState, useRef, useEffect } from "react"
+import { NavLink } from "react-router-dom"
 
 function Navbar() {
   // Estado que controla si el menú móvil está abierto o cerrado
@@ -54,6 +55,18 @@ function Navbar() {
                     </summary>
                     {/* Submenú */}
                     <div className="absolute left-0 mt-2 w-44 bg-white border border-gray-200 shadow-md rounded-md py-1 z-50">
+                        <NavLink to={"/weapons"} >
+                      <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Weapons</p>
+                      </NavLink>
+                       <NavLink to={"/Technology"} >
+                      <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Technology</a>
+                      </NavLink>
+                      <NavLink to={"/Materials"} >
+                      <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Materials</a>
+                      </NavLink>
+                      <NavLink to={"/Books"} >
+                      <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Books</a>
+                      </NavLink>
                       <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Weapons</a>
                       <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Technology</a>
                       <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Materials</a>
@@ -68,6 +81,18 @@ function Navbar() {
                       <img src={piquito} alt="" className="w-3 h-3 object-contain" />
                     </summary>
                     <div className="absolute left-0 mt-2 w-44 bg-white border border-gray-200 shadow-md rounded-md py-1 z-50">
+                       <NavLink to={"/weaponsPitlover"} >
+                      <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Weapons</p>
+                      </NavLink>
+                       <NavLink to={"/TechnologyPitlover"} >
+                      <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Technology</a>
+                      </NavLink>
+                      <NavLink to={"/MaterialsPitlover"} >
+                      <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Materials</a>
+                      </NavLink>
+                      <NavLink to={"/BooksPitlover"} >
+                      <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Books</a>
+                      </NavLink>
                       <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Weapons</a>
                       <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Technology</a>
                       <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Materials</a>
@@ -82,6 +107,18 @@ function Navbar() {
                       <img src={piquito} alt="" className="w-3 h-3 object-contain" />
                     </summary>
                     <div className="absolute left-0 mt-2 w-44 bg-white border border-gray-200 shadow-md rounded-md py-1 z-50">
+                      <NavLink to={"/weaponsZaun"} >
+                      <p className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Weapons</p>
+                      </NavLink>
+                       <NavLink to={"/TechnologyZaun"} >
+                      <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Technology</a>
+                      </NavLink>
+                      <NavLink to={"/MaterialsZaun"} >
+                      <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Materials</a>
+                      </NavLink>
+                      <NavLink to={"/BooksZaun"} >
+                      <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Books</a>
+                      </NavLink>
                       <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Weapons</a>
                       <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Technology</a>
                       <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Materials</a>
@@ -104,6 +141,15 @@ function Navbar() {
               />
               <img src={lupa} alt="Search icon" className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
+            
+            <div className="flex space-x-1.5 gap-5">
+              <NavLink to={"/persona"} >
+                <div className="self-center object-contain"> <img src={cart} alt="" /></div>
+                </NavLink>
+                <NavLink to={"/persona"} >
+                
+                <div className="self-center object-contain"> <img src={persona} alt="" /></div>
+                </NavLink>
 
             {/* Íconos de carrito y usuario */}
             <div className="flex items-center gap-5">
