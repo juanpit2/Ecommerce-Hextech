@@ -2,7 +2,7 @@ import './App.css'
 import React from "react";
 import Navbar from './components/layout/Header'
 import LandingCarousel from './components/layout/LandingCarousel'
-import ProductGrid from "./components/features/products/ProductGrid";
+import Functionalities from "./components/layout/Functionalities";
 import ReviewList from './components/features/reviews/ReviewList';
 import Sections from './components/layout/Sections';
 
@@ -13,12 +13,12 @@ function App() {
         <Navbar />
         <LandingCarousel />
         <Sections />
-        <Functionalities />
+        <Functionalities/>
         <div className="max-w-6xl mx-auto px-4">
           <ReviewList />
         </div>
       </div>
-    </div>
+    
     </>
 
   );
