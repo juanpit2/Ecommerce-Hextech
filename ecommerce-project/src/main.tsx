@@ -6,18 +6,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from './pages/Home.tsx'
 import LoginPage from './pages/LoginPage.tsx'
 import SignInPage from './pages/SignInPage.tsx'
+import ProductPitlover from './pages/ProductPitlover.tsx'
 
 const Routes=createBrowserRouter([{
   path: '/',
-  element: <Home/>,
-},{
-  path: '/',
-  element: <LoginPage/>,
-  index: true
-},{
-  path: '/',
-  element: <SignInPage/>,
-}])
+  element: <ProductPitlover/>,
+},
+])
 
 
 
