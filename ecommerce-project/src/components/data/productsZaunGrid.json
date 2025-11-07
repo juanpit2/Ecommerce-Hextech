@@ -1,0 +1,83 @@
+[
+  {
+    "id": 1,
+    "name": "Bombo-Bang",
+    "price": 3800,
+    "currency": "GLD",
+    "rating": 4.5,
+    "image": "/public/images/guante-dark.png",
+    "description": "Chaotic handmade bomb with a very signature touch — light, loud and extremely unstable."
+  },
+  {
+    "id": 2,
+    "name": "Fishbones",
+    "price": 12500,
+    "currency": "GLD",
+    "rating": 4.8,
+    "image": "/public/images/fishbones-dark.png",
+    "description": "Jinx’s iconic rocket launcher. Devastating firepower packed into a shark-themed design."
+  },
+  {
+    "id": 3,
+    "name": "Shimmer Vial",
+    "price": 1000,
+    "currency": "GLD",
+    "rating": 4.6,
+    "image": "/public/images/shimmer-dark.png",
+    "description": "The infamous Zaunite serum. Grants massive boosts in power at the cost of dangerous instability."
+  },
+  {
+    "id": 4,
+    "name": "Chem book",
+    "price": 800,
+    "currency": "GLD",
+    "rating": 4.5,
+    "image": "/public/images/sheem-book.png",
+    "description": "A volatile tome infused with Shimmer — chaotic, unstable, and dangerously explosive."
+  },
+  {
+    "id" : 5,
+    "name": "Pow-Pow",
+    "price": 18700,
+    "currency": "GLD",
+    "rating": 4.9,
+    "image": "/public/images/Pow-pow.png",
+    "description": "Jinx’s rapid-fire minigun that offers zero precision and maximum chaos."
+  },
+  {
+    "id": 6,
+    "name": "Stop Watch",
+    "price": 150000,
+    "currency": "GLD",
+    "rating": 4.8,
+    "image": "/public/images/Stop-watch.png",
+    "description": "A rare Zaun-made device — Shimmer-enhanced. Freezes time at a dangerous cost."
+  },
+  {
+    "id": 7,
+    "name": "Zapper",
+    "price": 3800,
+    "currency": "GLD",
+    "rating": 4.5,
+    "image": "/public/images/Zapper.png",
+    "description": "Compact and deadly — Jinx’s handheld shock pistol built for shock and style."
+  },
+  {
+    "id": 8,
+    "name": "Firelight Skate",
+    "price": 25500,
+    "currency": "GLD",
+    "rating": 4.5,
+    "image":  "/public/images/Firelight.png",
+    "description": "A high-speed hoverboard powered by unstable tech — reckless agility guaranteed."
+  },
+  {
+    "id": 9,
+    "name": "ChemTech Pistol",
+    "price": 6000,
+    "currency": "GLD",
+    "rating": 4.6,
+    "image": "/public/images/pistol-dark.png",
+    "description": "Zaun-forged revolver enhanced with Shimmer valves — toxic precision in every shot."
+  }
+]

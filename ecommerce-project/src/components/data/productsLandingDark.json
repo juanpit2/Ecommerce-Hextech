@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "Dark Hex Gauntlet",
+    "price": 3800,
+    "image": "/public/images/guante-dark.png",
+    "rating": 4.5
+  },
+  {
+    "id": 2,
+    "name": "Night Shark",
+    "price": 12500,
+    "image": "/public/images/fishbones-dark.png",
+    "rating": 4.5
+  },
+  {
+    "id": 3,
+    "name": "Void Tube",
+    "price": 1000,
+    "image": "/public/images/shimmer-dark.png",
+    "rating": 4.5
+  },
+  {
+    "id": 4,
+    "name": "Obsidian Gatling",
+    "price": 18700,
+    "image": "/public/images/gunmachine-dark.png",
+    "rating": 4.5
+  }
+]
