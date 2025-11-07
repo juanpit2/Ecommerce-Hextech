@@ -7,9 +7,7 @@ const ProductGrid: React.FC = () => {
   return (
     <div className="min-h-screen bg-white py-32 px-8">
       {/* Título principal del catálogo */}
-      <h1 className="text-4xl font-bold text-center mb-24 text-gray-800">
-        Catálogo de Productos
-      </h1>
+     
 
       {/* 
         Contenedor en grid responsivo:
