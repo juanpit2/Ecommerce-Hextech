@@ -1,22 +1,33 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.tsx'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import Home from './pages/Home.tsx'
-import LoginPage from './pages/LoginPage.tsx'
+import LoginPage from './pages/LogInPage.tsx'
 import SignInPage from './pages/SignInPage.tsx'
+import App from './App.tsx'
 
-const Routes=createBrowserRouter([{
+const Routes=createBrowserRouter([
+  {
   path: '/',
-  element: <Home/>,
+  element: <Navigate to="/SignIn" />,
+   
+},
+  {
+  path: '/home',
+  element: <Home/>, 
 },{
-  path: '/',
-  element: <LoginPage/>,
-  index: true
+  path: '/Login',
+  element: <LoginPage/>
 },{
-  path: '/',
+  path: '/SignIn',
   element: <SignInPage/>,
+  index: true,
+},
+{
+path: '*',
+element: <h1>404</h1>
+ 
 }])
 
 
