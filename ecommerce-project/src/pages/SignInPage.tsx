@@ -1,7 +1,7 @@
-import LoginForm from '../components/features/auth/LoginForm'
+import RegisterForm from '../components/features/auth/RegisterForm'
 
-export default function loginPage() {
+export default function SignInPage() {
     return(
-        <LoginForm />
+        <RegisterForm />
     )
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +11,7 @@ const SignUp = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Validación básica
     if (!email.includes("@")) {
       setError("Please enter a valid email address");
       return;
@@ -26,6 +27,7 @@ const SignUp = () => {
       return;
     }
 
+    // Simulación de registro exitoso
     alert("Account created successfully!");
     navigate("/Login");
   };
@@ -87,13 +89,14 @@ const SignUp = () => {
           </div>
 
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
-
-          <button
-            type="submit"
-            className="w-full bg-gray-800 text-white py-2 rounded-md hover:bg-gray-700 transition"
-          >
-            Sign up
-          </button>
+          <NavLink to="/home">
+            <button
+              type="submit"
+              className="w-full bg-gray-800 text-white py-2 rounded-md hover:bg-gray-700 transition"
+            >
+              Sign up
+            </button>
+          </NavLink>
         </form>
 
         <p className="text-center text-sm text-gray-500 mt-6">
@@ -110,4 +113,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUp;
