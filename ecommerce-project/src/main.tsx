@@ -1,34 +1,17 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
-import Home from './pages/Home.tsx'
-import LoginPage from './pages/LogInPage.tsx'
-import SignInPage from './pages/SignInPage.tsx'
-import App from './App.tsx'
+import "./App.css";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+
+import ProductPitlover from './pages/ProductPitlover.tsx'
 
 const Routes=createBrowserRouter([
   {
   path: '/',
-  element: <Navigate to="/SignIn" />,
-   
+  element: <ProductPitlover/>,
 },
-  {
-  path: '/home',
-  element: <Home/>, 
-},{
-  path: '/Login',
-  element: <LoginPage/>
-},{
-  path: '/SignIn',
-  element: <SignInPage/>,
-  index: true,
-},
-{
-path: '*',
-element: <h1>404</h1>
- 
-}])
+])
 
 
 
