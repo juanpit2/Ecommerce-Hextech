@@ -3,11 +3,9 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import Home from './pages/Home.tsx'
-import LoginPage from './pages/LoginPage.tsx'
+import LoginPage from './pages/LogInPage.tsx'
 import SignInPage from './pages/SignInPage.tsx'
-import BuyProductPiltover from './pages/BuyProductPiltover.tsx'
-import './App.css'
-
+import App from './App.tsx'
 
 const Routes=createBrowserRouter([
   {
@@ -17,7 +15,7 @@ const Routes=createBrowserRouter([
 },
   {
   path: '/home',
-  element: <BuyProductPiltover/>, 
+  element: <Home/>, 
 },{
   path: '/Login',
   element: <LoginPage/>
