@@ -1,0 +1,258 @@
+[
+  {
+    "id": 1,
+    "name": "Runic Codex",
+    "price": 1000,
+    "currency": "GLD",
+    "description": "An ancient tome of Hextech knowledge — blueprints, runes, and secrets for mastering crystal energy.",
+    "category": "Hextech Artifact",
+    "tags": ["hextech", "arcane", "knowledge"],
+    "colors": ["#A8D3FF", "#6AA7FF", "#1F2D5C"],
+    "images": [
+      "/images/RUNIC1.png",
+      "/images/RUNIC2.png",
+      "/images/RUNIC3.png"
+    ],
+    "materials": [
+      "Arcane-treated parchment",
+      "Crystalized binding rings",
+      "Hex-etched runes"
+    ],
+    "features": [
+      "Contains ancient Piltover schematics",
+      "Unlocks new crafting recipes"
+    ],
+    "specification": {
+      "Weight": "1.2 kg",
+      "Energy Conductivity": "High",
+      "Origin": "First Age Piltover Archives"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Hextech Crystals",
+    "price": 60500,
+    "currency": "GLD",
+    "description": "The heart of Hextech innovation — pure, stabilized energy ready for crafting or power.",
+    "category": "Hextech Resource",
+    "tags": ["crystal", "hextech", "energy"],
+    "colors": ["#5DCFFF", "#0BB8F5", "#004A75"],
+    "images": [
+      "/images/CRYSTAL1.png",
+      "/images/CRYSTAL2.png",
+      "/images/CRYSTAL3.png"
+    ],
+    "materials": [
+      "Pure hex crystal",
+      "Stabilization matrix layer"
+    ],
+    "features": [
+      "Maintains charge under pressure",
+      "Compatible with most Piltover bindings"
+    ],
+    "specification": {
+      "Energy Output": "Up to 4500 J/s",
+      "Stability Grade": "A+",
+      "Handling Safety": "Handle via insulated gloves"
+    }
+  },
+  {
+    "id": 3,
+    "name": "Hextech Core Vault",
+    "price": 21200,
+    "currency": "GLD",
+    "description": "A reinforced container designed to hold unstable hextech crystals with maximum safety and elegance.",
+    "category": "Hextech Storage",
+    "tags": ["storage", "hextech", "security"],
+    "colors": ["#58C5CE", "#0A6C75", "#022C31"],
+    "images": [
+      "/images/VAULT1.png",
+      "/images/VAULT2.png",
+      "/images/VAULT3.png"
+    ],
+    "materials": [
+      "Reinforced steel",
+      "Rubberized shock plating",
+      "Stability regulator seals"
+    ],
+    "features": [
+      "Shock absorption design",
+      "Leak-proof arcane seal"
+    ],
+    "specification": {
+      "Capacity": "Up to 3 large crystals",
+      "Shock Resistance": "Up to 15kN impact",
+      "Seal Durability": "Up to 50 years"
+    }
+  },
+  {
+    "id": 4,
+    "name": "Orianna",
+    "price": 300500,
+    "currency": "GLD",
+    "description": "A masterful automaton built with grace and precision — elegance fused with Hextech.",
+    "category": "Living Construct",
+    "tags": ["automaton", "hextech", "precision"],
+    "colors": ["#C4A78A", "#6B4E38", "#1D1815"],
+    "images": [
+      "/images/ORIANNA1.png",
+      "/images/ORIANNA2.png",
+      "/images/ORIANNA3.png"
+    ],
+    "materials": [
+      "Reinforced bone-gear frame",
+      "Clockwork muscle system",
+      "Hex-core emotional matrix"
+    ],
+    "features": [
+      "Graceful movement algorithms",
+      "Precision combat capability"
+    ],
+    "specification": {
+      "Weight": "52 kg",
+      "Power Source": "Enchanted hexcore",
+      "Intelligence Level": "Adaptive emotional logic"
+    }
+  },
+  {
+    "id": 5,
+    "name": "Pirate Gun",
+    "price": 10300,
+    "currency": "GLD",
+    "description": "A sleek, finely tuned firearm combining Hextech precision with timeless design.",
+    "category": "Weapon",
+    "tags": ["gun", "hextech", "marksman"],
+    "colors": ["#C48B51", "#3A2A1B", "#D0ECFF"],
+    "images": [
+      "/images/PIRATEGUN1.png",
+      "/images/PIRATEGUN2.png"
+    ],
+    "materials": [
+      "Brass-wood hybrid grip",
+      "Reinforced hex-steel barrel"
+    ],
+    "features": [
+      "Stable firing precision",
+      "Enhanced projectile velocity"
+    ],
+    "specification": {
+      "Caliber": "10.4 mm",
+      "Effective Range": "450 m",
+      "Recoil": "Low"
+    }
+  },
+  {
+    "id": 6,
+    "name": "Hextech Pistol",
+    "price": 9850,
+    "currency": "GLD",
+    "description": "Compact, efficient, and deadly accurate — Piltover’s answer to quick encounters.",
+    "category": "Weapon",
+    "tags": ["pistol", "hextech", "quick-combat"],
+    "colors": ["#8DC4E6", "#2C5165", "#0E1F2B"],
+    "images": [
+      "/images/PISTOL1.png",
+      "/images/PISTOL2.png"
+    ],
+    "materials": [
+      "Machined hex-steel body",
+      "Crystal socket stabilizer"
+    ],
+    "features": [
+      "Fast draw optimized grip",
+      "Low-latency trigger response"
+    ],
+    "specification": {
+      "Caliber": "8.9 mm",
+      "Effective Range": "320 m",
+      "reload Speed": "0.8s"
+    }
+  },
+  {
+    "id": 7,
+    "name": "Atlas Gauntlets",
+    "price": 9800,
+    "currency": "GLD",
+    "description": "Boost your strength with Hextech power. Raw force in a single punch.",
+    "category": "Hextech Gear",
+    "tags": ["hextech", "gauntlet", "power"],
+    "colors": ["#F7C84B", "#6D633F", "#3676B7"],
+    "images": [
+      "/images/Card-guante.png",
+      "/images/GUANTE2.png",
+      "/images/GUANTE3.png",
+      "/images/GUANTE4.png",
+      "/images/GUANTE5.png"
+    ],
+    "materials": [
+      "Alloyed hexsteel shell",
+      "Piltover wiring",
+      "Stabilized pure hex crystal core"
+    ],
+    "features": [
+      "Sonic pulse generator",
+      "High impact reinforcement"
+    ],
+    "specification": {
+      "Weight": "18 kg",
+      "Power Source": "Pure Hex crystal",
+      "Strength Amplification": "x12",
+      "Secondary Function": "Sonic pulse generator",
+      "Safety": "Requires specialized handling"
+    }
+  },
+  {
+    "id": 8,
+    "name": "Precision Rifle",
+    "price": 14500,
+    "currency": "GLD",
+    "description": "Piltover-grade precision for one-shot clarity. Lawful, lethal, and beautifully engineered.",
+    "category": "Weapon",
+    "tags": ["rifle", "hextech", "sniper"],
+    "colors": ["#D9BC7A", "#4F3D22", "#22344D"],
+    "images": [
+      "/images/RIFLE1.png",
+      "/images/RIFLE2.png"
+    ],
+    "materials": [
+      "Refined hex-barrel",
+      "Precision calibrated scope"
+    ],
+    "features": [
+      "One-shot accuracy",
+      "Stable recoil balancing"
+    ],
+    "specification": {
+      "Caliber": "11.2 mm",
+      "Effective Range": "1200 m",
+      "Scope Zoom": "8x optical hex-lens"
+    }
+  },
+  {
+    "id": 9,
+    "name": "Transforming Warhammer",
+    "price": 11200,
+    "currency": "GLD",
+    "description": "Turn intellect into impact — a masterfully engineered warhammer that shifts between brute force and precision engineering.",
+    "category": "Weapon",
+    "tags": ["warhammer", "engineering", "mecha"],
+    "colors": ["#7686A8", "#34405B", "#1B2434"],
+    "images": [
+      "/images/HAMMER1.png",
+      "/images/HAMMER2.png"
+    ],
+    "materials": [
+      "Tempered hexsteel head",
+      "Shock absorbing frame"
+    ],
+    "features": [
+      "Mode-shifting impact system",
+      "Arc-based energy discharge"
+    ],
+    "specification": {
+      "Weight": "34 kg",
+      "Impact Force": "Variable (x4 - x16)",
+      "Core Mechanism": "Rotational hexgear"
+    }
+  }
+]

@@ -1,37 +1,44 @@
 import React from "react";
 import products from "../../data/products.json";
 import ProductCard from "./ProductCard";
+import { useNavigate } from "react-router-dom";
 
-// Componente que muestra un catálogo de productos en formato de cuadrícula
+// Muestra el catálogo y navega a /product/:id al hacer click en cada card
 const ProductGrid: React.FC = () => {
+  const navigate = useNavigate();
+
+  const openProduct = (id: number) => {
+    // Usa la URL con el id; si quieres, puedes enviar también el estado
+    navigate(`/product/${id}`, { state: { id } });
+  };
+
   return (
     <div className="min-h-screen bg-white pt-[-30] px-8">
-      {/* Título principal del catálogo */}
-       <h1 className="text-[32px] py-30 font-semibold text-[#0A0F1C] mt-14 mb-6 px-20">
-  Products
-</h1>
+      <h1 className="text-[32px] py-30 font-semibold text-[#0A0F1C] mt-14 mb-6 px-20">
+        Products
+      </h1>
 
-      {/* 
-        Contenedor en grid responsivo:
-        - 1 columna en móviles
-        - 2 columnas en pantallas medianas (sm)
-        - 3 columnas en pantallas grandes (lg)
-        - gap-x → separación horizontal
-        - gap-y → separación vertical entre tarjetas
-      */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-28 justify-items-center py-5
-      max-w-6xl mx-auto">
-        {/* Mapeo de productos (JSON) para generar una tarjeta por cada uno */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-28 justify-items-center py-5 max-w-6xl mx-auto">
         {products.map((product) => (
-          <ProductCard
-            key={product.id} // Identificador único por producto
-            name={product.name}
-            price={product.price}
-            currency={product.currency}
-            rating={product.rating}
-            image={product.image}
-            description={product.description}
-          />
+          <div
+            key={product.id}
+            className="cursor-pointer"
+            role="button"
+            tabIndex={0}
+            onClick={() => openProduct(product.id)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") openProduct(product.id);
+            }}
+          >
+            <ProductCard
+              name={product.name}
+              price={product.price}
+              currency={product.currency}
+              rating={product.rating}
+              image={product.image}
+              description={product.description}
+            />
+          </div>
         ))}
       </div>
     </div>

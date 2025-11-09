@@ -6,6 +6,7 @@ import lupa from "../../../public/images/icons/startContent.svg"
 
 // Importación de hooks de React para manejo de estado, referencias y efectos
 import { useState, useRef, useEffect } from "react"
+import { NavLink } from "react-router-dom"
 
 function Navbar() {
   // Estado que controla si el menú móvil está abierto o cerrado
@@ -37,9 +38,11 @@ function Navbar() {
           <div className="flex items-center gap-3">
 
             {/* Logo del sitio */}
-            <div className="text-2xl font-bold text-gray-800 hover:text-yellow-500 transition-colors duration-300 ease-in-out">
-              HEXTECH
-            </div>
+            <NavLink to="/home">
+              <div className="text-2xl font-bold text-gray-800 hover:text-yellow-500 transition-colors duration-300 ease-in-out">
+                HEXTECH
+              </div>
+            </NavLink>
 
             {/* Menú visible solo en pantallas grandes */}
             <div className="hidden md:block">

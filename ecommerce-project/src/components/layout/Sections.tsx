@@ -1,4 +1,5 @@
 // Importación de las imágenes principales para las secciones
+import { NavLink } from "react-router-dom";
 import piltover from "../../../public/images/icons/Piltover Section.svg";
 import zaun from "../../../public/images/icons/Section Zaun.svg";
 
@@ -19,25 +20,26 @@ export default function Sections() {
         */}
 
         {/* Sección de Piltover */}
-        <div className="w-[480px] md:w-[560px] lg:w-[640px] max-sm:w-[80%]">
-          <img
-            src={piltover}
-            alt="Piltover Section"
-            className="
-              mx-auto block object-cover rounded-2xl
-              w-full h-auto
-              transform transition-transform duration-200 ease-in-out
-              hover:scale-105 focus-visible:scale-105 cursor-pointer
-            "
-          />
-          {/* 
-            - mx-auto: centra horizontalmente la imagen
-            - object-cover: mantiene proporción al llenar el contenedor
-            - rounded-2xl: bordes redondeados
-            - hover:scale-105: efecto de zoom suave al pasar el cursor
-          */}
-        </div>
-
+        <NavLink to="/Piltover">
+          <div className="w-[480px] md:w-[560px] lg:w-[640px] max-sm:w-[80%]">
+            <img
+              src={piltover}
+              alt="Piltover Section"
+              className="
+                mx-auto block object-cover rounded-2xl
+                w-full h-auto
+                transform transition-transform duration-200 ease-in-out
+                hover:scale-105 focus-visible:scale-105 cursor-pointer
+              "
+            />
+            {/* 
+              - mx-auto: centra horizontalmente la imagen
+              - object-cover: mantiene proporción al llenar el contenedor
+              - rounded-2xl: bordes redondeados
+              - hover:scale-105: efecto de zoom suave al pasar el cursor
+            */}
+          </div>
+        </NavLink>
         {/* Sección de Zaun */}
         <div className="w-[480px] md:w-[560px] lg:w-[640px] max-sm:w-[80%]">
           <img
