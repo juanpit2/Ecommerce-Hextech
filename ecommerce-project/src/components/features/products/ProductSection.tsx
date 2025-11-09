@@ -63,7 +63,7 @@ const ProductSection = () => {
           </div>
 
           {/* BUY NOW */}
-          <button className="w-76 bg-[#3676B7] hover:bg-[#2c5885] text-white font-semibold py-2 rounded-xl transition-all shadow-sm hover:shadow-[0_8px_20px_rgba(54,118,183,0.35)]">
+          <button className="w-36 bg-[#3676B7] hover:bg-[#2c5885] text-white font-semibold py-2 rounded-xl transition-all shadow-sm hover:shadow-[0_8px_20px_rgba(54,118,183,0.35)]">
             Buy now
           </button>
         </div>
@@ -98,15 +98,20 @@ const ProductSection = () => {
       </div>
 
       {/* ✅ FINAL ACCORDION BUTTONS IN 3 COLUMNS */}
-  <div className="max-w-4xl mx-auto pt-20  grid grid-cols-1 sm:grid-cols-3 gap-15 text-center">
+  <div className="max-w-6xl mx-auto pt-20  grid grid-cols-1 sm:grid-cols-3 gap-y-6 sm:gap-x-40 text-center">
 
         {/* MATERIALS */}
-        <div>
+  <div className="justify-self-start">
           <button
             onClick={() => toggle("mat")}
-            className="w-full bg-[#B39738] px-6 py-3 rounded-md flex justify-between items-center mx-auto hover:bg-[#D4B544] transition-all text-sm font-medium min-w-[200px]"
+             className="w-full bg-[#B39738] px-6 py-3 rounded-md relative flex items-center justify-center mx-auto hover:bg-[#D4B544] transition-all text-sm font-medium min-w-[200px] shadow-sm hover:shadow-[0_8px_20px_rgba(179,151,56,0.28)]"
           >
-            Materials <span className={`ml-3 transition-transform ${active === "mat" ? "rotate-180" : ""}`}><span className="inline-flex items-center justify-center w-7 h-7 bg-white/10 rounded-full text-[#071126]">⌄</span></span>
+            <span className="pointer-events-none">Materials</span>
+            <span className={`absolute right-3 inline-flex items-center justify-center w-7 h-7 bg-white/10 rounded-full text-white transition-transform ${active === "mat" ? "rotate-180" : ""}`}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
+              </svg>
+            </span>
           </button>
 
           <div className={`overflow-hidden transition-all duration-300 ${active === "mat" ? "max-h-40 mt-3" : "max-h-0"}`}>
@@ -119,12 +124,17 @@ const ProductSection = () => {
         </div>
 
         {/* FEATURES */}
-        <div>
+  <div className="justify-self-center">
           <button
             onClick={() => toggle("feat")}
-            className="w-full bg-[#B39738] px-6 py-3 rounded-md flex justify-between items-center mx-auto hover:bg-[#D4B544] transition-all text-sm font-medium min-w-[200px]"
+             className="w-full bg-[#B39738] px-6 py-3 rounded-md relative flex items-center justify-center mx-auto hover:bg-[#D4B544] transition-all text-sm font-medium min-w-[200px] shadow-sm hover:shadow-[0_8px_20px_rgba(179,151,56,0.28)]"
           >
-            Product feature <span className={`ml-3 transition-transform ${active === "feat" ? "rotate-180" : ""}`}><span className="inline-flex items-center justify-center w-7 h-7 bg-white/10 rounded-full text-[#071126]">⌄</span></span>
+            <span className="pointer-events-none">Product feature</span>
+            <span className={`absolute right-3 inline-flex items-center justify-center w-7 h-7 bg-white/10 rounded-full text-white transition-transform ${active === "feat" ? "rotate-180" : ""}`}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
+              </svg>
+            </span>
           </button>
 
           <div className={`overflow-hidden transition-all duration-300 ${active === "feat" ? "max-h-40 mt-3" : "max-h-0"}`}>
@@ -135,12 +145,17 @@ const ProductSection = () => {
         </div>
 
         {/* SPECIFICATION */}
-        <div>
+  <div className="justify-self-end">
           <button
             onClick={() => toggle("spec")}
-            className="w-full bg-[#B39738] px-6 py-3 rounded-md flex justify-between items-center mx-auto hover:bg-[#D4B544] transition-all text-sm font-medium min-w-[200px]"
+             className="w-full bg-[#B39738] px-6 py-3 rounded-md relative flex items-center justify-center mx-auto hover:bg-[#D4B544] transition-all text-sm font-medium min-w-[200px] shadow-sm hover:shadow-[0_8px_20px_rgba(179,151,56,0.28)]"
           >
-            Specification <span className={`ml-3 transition-transform ${active === "spec" ? "rotate-180" : ""}`}><span className="inline-flex items-center justify-center w-7 h-7 bg-white/10 rounded-full text-[#071126]">⌄</span></span>
+            <span className="pointer-events-none">Specification</span>
+            <span className={`absolute right-3 inline-flex items-center justify-center w-7 h-7 bg-white/10 rounded-full text-white transition-transform ${active === "spec" ? "rotate-180" : ""}`}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clipRule="evenodd" />
+              </svg>
+            </span>
           </button>
 
           <div className={`overflow-hidden transition-all duration-300 ${active === "spec" ? "max-h-60 mt-3" : "max-h-0"}`}>
