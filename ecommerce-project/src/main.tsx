@@ -8,6 +8,7 @@ import SignInPage from './pages/SignInPage.tsx'
 import App from './App.tsx' 
 import ProductPiltover from './pages/ProductPitlover.tsx'
 import ProductPiltoverBuy from './pages/BuyProductPiltover.tsx'
+import ProductCart from './pages/ProductCart.tsx'
 
 const Routes=createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const Routes=createBrowserRouter([
 {
   path:"/Product/:id",
   element: <ProductPiltoverBuy />,
+},
+{
+  path:"/ProductCart",
+  element: <ProductCart />,
 },
 {
 path: '*',

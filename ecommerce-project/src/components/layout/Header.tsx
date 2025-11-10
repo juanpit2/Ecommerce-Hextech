@@ -110,7 +110,9 @@ function Navbar() {
 
             {/* Íconos de carrito y usuario */}
             <div className="flex items-center gap-5">
-              <img src={cart} alt="Cart" />
+              <NavLink to="/ProductCart">
+                <img src={cart} alt="Cart" />
+              </NavLink>
               <img src={persona} alt="Account" />
             </div>
           </div>
