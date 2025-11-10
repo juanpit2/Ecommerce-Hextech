@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const ChevronRight = () => (
   <svg viewBox="0 0 24 24" className="w-5 h-5 text-gray-400">
@@ -71,7 +71,7 @@ const AccountPage: React.FC = () => {
           <nav className="divide-y divide-gray-200">
             <Row to="/account/add-product" label="Add Product" divider />
             <Row to="/account/edit-product" label="Edit Product" divider />
-            <Row to="/account/chats" label="Chats" divider />
+            <Row to="/Chats" label="Chats" divider />
             <Row to="/logout" label="Log out" danger />
           </nav>
         </div>
