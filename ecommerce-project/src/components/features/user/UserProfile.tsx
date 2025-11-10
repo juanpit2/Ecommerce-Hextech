@@ -72,6 +72,7 @@ const AccountPage: React.FC = () => {
             <Row to="/account/add-product" label="Add Product" divider />
             <Row to="/account/edit-product" label="Edit Product" divider />
             <Row to="/account/chats" label="Chats" divider />
+            <Row to="/reviews" label="Reviews" divider />
             <Row to="/logout" label="Log out" danger />
           </nav>
         </div>

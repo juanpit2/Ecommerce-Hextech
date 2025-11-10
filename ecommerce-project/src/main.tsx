@@ -10,6 +10,7 @@ import ProductPiltover from './pages/ProductPitlover.tsx'
 import ProductPiltoverBuy from './pages/BuyProductPiltover.tsx'
 import ProductCart from './pages/ProductCart.tsx'
 import UserProfile from './pages/AccountPage.tsx'
+import ReviewWindow from './components/features/reviews/ReviewWindow'
 
 const Routes=createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const Routes=createBrowserRouter([
 {
   path:"/ProductCart",
   element: <ProductCart />,
+},
+{
+  path: '/reviews',
+  element: <ReviewWindow />,
 },
 {
 path: '*',
