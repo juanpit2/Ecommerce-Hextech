@@ -1,84 +1,111 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [staySignedIn, setStaySignedIn] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Validacion temporal sin base de datos
-    if (email === "admin@vass.com" && password === "12345") {
-      alert("Login successful!");
-      navigate("/"); // Redirige a Home
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const user = users.find((u: { email: string; password: string }) => 
+      u.email === email && u.password === password
+    );
+
+    if (user) {
+      if (staySignedIn) {
+        localStorage.setItem("currentUser", JSON.stringify({ 
+          email: user.email,
+          username: user.username 
+        }));
+      } else {
+        sessionStorage.setItem("currentUser", JSON.stringify({ 
+          email: user.email,
+          username: user.username 
+        }));
+      }
     } else {
       setError("Invalid email or password");
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      <div className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
-          Log in to your account
-        </h2>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-800">
+      <div className="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-md">
+        <h1 className="text-4xl font-bold text-center mb-2">HEXTECH</h1>
+        <h2 className="text-xl text-center text-gray-600 mb-8">Sign in</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email
-            </label>
             <input
               type="email"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                if (error) setError("");
+                setError("");
               }}
-              className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-gray-800 focus:outline-none"
-              placeholder="you@example.com"
+              className="w-full bg-gray-100 rounded-xl p-4 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              placeholder="Email"
               required
-              autoComplete="email"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Password
-            </label>
             <input
               type="password"
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                if (error) setError("");
+                setError("");
               }}
-              className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-gray-800 focus:outline-none"
-              placeholder="••••••••"
+              className="w-full bg-gray-100 rounded-xl p-4 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              placeholder="Password"
               required
-              autoComplete="current-password"
             />
           </div>
 
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              id="staySignedIn"
+              checked={staySignedIn}
+              onChange={(e) => setStaySignedIn(e.target.checked)}
+              className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+            />
+            <label htmlFor="staySignedIn" className="ml-2 text-sm text-gray-600">
+              Stay signed in
+            </label>
+          </div>
 
+          {error && (
+            <p className="text-red-500 text-sm text-center bg-red-50 p-2 rounded">
+              {error}
+            </p>
+          )}
+          
+          <NavLink to="/home">
           <button
             type="submit"
-            className="w-full bg-gray-800 text-white py-2 rounded-md hover:bg-gray-700 transition"
+            className="w-full bg-blue-500 text-white py-4 rounded-xl font-semibold hover:bg-blue-600 transition-colors"
           >
-            Log in
+            Next
           </button>
-        </form>
+          </NavLink>
 
-        <p className="text-center text-sm text-gray-500 mt-6">
-          Don’t have an account?{" "}
-          <a href="#" className="text-gray-800 font-medium hover:underline">
-            Sign up
-          </a>
-        </p>
+          <div className="flex items-center justify-between mt-4">
+            <button
+              type="button"
+              onClick={() => navigate("/register")}
+              className="text-sm text-gray-600 hover:underline"
+            >
+              Create account
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
