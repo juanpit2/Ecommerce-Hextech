@@ -50,12 +50,15 @@ const Routes=createBrowserRouter([
 {
   path:"/Chats",
   element: <ChatPage />,
-  path:"/ProductForm",
-  element: <ProductForm />,
+  
 },
 {
   path:"/ProductEdit",
   element: <ProductEdit />,
+},
+{
+  path:"/ProductForm",
+  element: <ProductForm />,
 },
 {
 path: '*',
