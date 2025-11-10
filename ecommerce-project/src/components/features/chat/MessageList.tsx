@@ -13,7 +13,7 @@ const MessageList = () => {
         <div className="p-4">
           <h2 className="text-xl font-bold mb-4">Chats</h2>
           <div className="space-y-2">
-            {['@Blessd', '@Pirlo', '@Kria R', '@Feid'].map((chat) => (
+            {['@Blessd', '@Pirlo', '@Kris R', '@Feid'].map((chat) => (
               <button
                 key={chat}
                 onClick={() => setSelectedChat(chat)}
