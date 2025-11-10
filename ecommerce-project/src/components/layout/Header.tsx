@@ -113,7 +113,9 @@ function Navbar() {
               <NavLink to="/ProductCart">
                 <img src={cart} alt="Cart" />
               </NavLink>
-              <img src={persona} alt="Account" />
+              <NavLink to="/UserProfile">
+                <img src={persona} alt="Account" />
+              </NavLink>
             </div>
           </div>
 
