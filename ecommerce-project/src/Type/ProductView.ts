@@ -1,4 +1,3 @@
-// src/Type/ProductView.ts
 export type Product = {
   id: number;
   name: string;
@@ -11,6 +10,5 @@ export type Product = {
   images: string[];
   materials: string[];
   features: string[];
-  // Si quieres ser estricto y evitar el error, usa | undefined:
   specification: Record<string, string | undefined>;
 };
