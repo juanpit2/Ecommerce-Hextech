@@ -66,7 +66,7 @@ const AccountPage: React.FC = () => {
         
           <nav className="divide-y divide-gray-200">
             <Row to="/Productform" label="Add Product" divider />
-            <Row to="/account/edit-product" label="Edit Product" divider />
+            <Row to="/ProductEdit" label="Edit Product" divider />
             <Row to="/account/chats" label="Chats" divider />
             <Row to="/logout" label="Log out" danger />
           </nav>
