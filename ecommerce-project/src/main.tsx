@@ -10,6 +10,7 @@ import ProductPiltover from './pages/ProductPitlover.tsx'
 import ProductPiltoverBuy from './pages/BuyProductPiltover.tsx'
 import ProductCart from './pages/ProductCart.tsx'
 import UserProfile from './pages/AccountPage.tsx'
+import ProductForm from './pages/ProductPage.tsx'
 
 const Routes=createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const Routes=createBrowserRouter([
 {
   path:"/ProductCart",
   element: <ProductCart />,
+},
+{
+  path:"/ProductForm",
+  element: <ProductForm />,
 },
 {
 path: '*',
