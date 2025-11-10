@@ -1,34 +1,34 @@
-// src/pages/ProductsPage.tsx
+import React from "react";
 import { useParams } from "react-router-dom";
-import Navbar from '../components/layout/Header';
-import ProductDetail from '../components/features/products/ProductSection';
-import Benefits from "../components/features/products/ProductBenefits";
+import { useAppSelector } from "../store/hooks";
+import ProductSection from "../components/features/products/ProductSection";
+import Navbar from '../components/layout/Header'
 import Footer from "../components/layout/Footer";
-import ReviewList from '../components/features/reviews/ReviewList';
-import productsView from "../components/data/productView.json";
-import type { Product } from '../Type/ProductView';
+import ReviewList from "../components/features/reviews/ReviewList";
+import Benefits from "../components/features/products/ProductBenefits";
 
-export default function ProductsPage() {
+export default function ProductDetailPage() {
   const { id } = useParams();
-  const allProducts = productsView as Product[];
-  const item = allProducts.find(p => p.id === Number(id));
+  const productId = Number(id);
 
-  if (!item) {
+  const product = useAppSelector((state) =>
+    state.products.items.find((p) => p.id === productId)
+  );
+
+  if (!product) {
     return (
-      <>
-        <Navbar />
-        <div className="max-w-7xl mx-auto px-6 py-16 text-white">
+      <div className="min-h-screen flex items-center justify-center bg-[#071126]">
+        <h1 className="text-3xl text-white font-bold">
           Product not found.
-        </div>
-        <Footer />
-      </>
+        </h1>
+      </div>
     );
   }
 
   return (
     <>
       <Navbar />
-      <ProductDetail product={item} />
+      <ProductSection product={product as any} />
       <ReviewList />
       <Benefits />
       <Footer />

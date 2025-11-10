@@ -1,4 +1,3 @@
-import cartData from "../components/data/productCart.json";
 import CartSection from "../components/features/products/ProducCardCart";
 import Footer from "../components/layout/Footer";
 import Navbar from "../components/layout/Header";
@@ -9,7 +8,7 @@ export default function CartPage() {
       <Navbar />
 
       <div className="flex-grow">
-        <CartSection items={cartData} />
+        <CartSection />
       </div>
 
       <Footer />
