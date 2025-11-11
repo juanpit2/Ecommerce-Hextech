@@ -18,7 +18,7 @@ const ProductGrid: React.FC = () => {
         Products
       </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-28 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-50 py-30 max-w-6xl mx-auto">
         {products.map((p) => (
           <div
             key={p.id}
