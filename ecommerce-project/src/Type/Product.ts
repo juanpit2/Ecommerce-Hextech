@@ -1,9 +1,22 @@
-export type ProductCardCart = {
-    id: number;         // Identificador único del producto
-  name: string;        // Nombre del producto
-  price: number;       // Precio numérico del producto
-  currency: string;    // Moneda (ej. "USD", "GLD")
-  rating: number;      // Calificación (0 a 5)
-  image: string;       // Ruta o URL de la imagen del producto
-  description: string; // Descripción corta del producto
-}
+export type Product = {
+  id: number;
+  name: string;
+  price: number;
+  currency?: string;
+  description?: string;
+
+  // imágenes
+  image?: string;        // portada opcional
+  images?: string[];     // galería opcional
+
+  // meta opcional
+  rating?: number;
+  category?: string;
+  tags?: string[];
+  colors?: string[];
+
+  // secciones opcionales
+  materials?: string[];
+  features?: string[];
+  specification?: Record<string, string | undefined>;
+};

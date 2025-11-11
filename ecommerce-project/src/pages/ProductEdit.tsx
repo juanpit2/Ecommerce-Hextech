@@ -1,14 +1,12 @@
-import Account from '../components/features/user/UserProfile'
+import ProductEdit from '../components/features/products/EditProduct.tsx'
 import Navbar from '../components/layout/Header'
 import Footer from "../components/layout/Footer";
 
-export default function AccountPage() {
+export default function ProductEditPage() {
     return(
         <>
         <Navbar />
-        <div className="flex-grow">
-            <Account />
-        </div>
+        <ProductEdit />
         <Footer />
         </>
     )

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "1",
+    "sender": "@Blessd",
+    "message": "It comes completely with all the hex??",
+    "timestamp": "2023-11-09T10:30:00",
+    "isUser": false
+  },
+  {
+    "id": "2", 
+    "sender": "You",
+    "message": "Yes it does",
+    "timestamp": "2023-11-09T10:31:00",
+    "isUser": true
+  },
+  {
+    "id": "3",
+    "sender": "@Blessd",
+    "message": "Right i like it",
+    "timestamp": "2023-11-09T10:32:00",
+    "isUser": false
+  },
+  {
+    "id": "4",
+    "sender": "You",
+    "message": "Do you have another question?",
+    "timestamp": "2023-11-09T10:33:00",
+    "isUser": true
+  }
+]
