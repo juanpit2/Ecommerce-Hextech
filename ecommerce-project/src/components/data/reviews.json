@@ -46,5 +46,17 @@
     "name": "TinkerTao",
     "rating": 5,
     "description": "Absolutely love it. Swappable heads make it my go-to for every build."
+    },
+    {
+    "id": "r9",
+    "name": "Kris R",
+    "rating": 5,
+    "description": "Best purchase I've made. Highly recommend!"
+    },
+    {
+    "id": "r10",
+    "name": "Feid",
+    "rating": 4.2,
+    "description": "Good product, but shipping took longer than expected"
     }
 ]
