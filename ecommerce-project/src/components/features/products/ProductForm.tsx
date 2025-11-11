@@ -1,140 +1,333 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
+import { useAppDispatch } from "../../../store/hooks";
+import { addProduct } from "../../../store/productSlice";
+
+/** ---------- Utilidades ---------- */
+const PLACEHOLDER = "/images/placeholder.png";
+
+// Función para convertir archivo a Base64
+const fileToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+};
 
 type FormValues = {
-  title: string;
+  name: string;
   price: number | "";
+  currency: string;
+  description: string;
   category: string;
+  rating: number | "";
+  tagInput: string;
+  colorInput: string;
+  materialInput: string;
+  featureInput: string;
+  specKey: string;
+  specValue: string;
 };
 
-type Props = {
-  initialValues?: Partial<FormValues>;
-  onNext?: (data: { values: FormValues; files: File[] }) => void;
-};
+const AddProductForm: React.FC = () => {
+  const dispatch = useAppDispatch();
 
-const AddProductForm: React.FC<Props> = ({ initialValues, onNext }) => {
   const [values, setValues] = useState<FormValues>({
-    title: initialValues?.title ?? "",
-    price: initialValues?.price ?? "",
-    category: initialValues?.category ?? "",
+    name: "",
+    price: "",
+    currency: "GLD",
+    description: "",
+    category: "",
+    rating: 5,
+    tagInput: "",
+    colorInput: "",
+    materialInput: "",
+    featureInput: "",
+    specKey: "",
+    specValue: "",
   });
 
-  const [files, setFiles] = useState<File[]>([]);
-  const [isDragging, setIsDragging] = useState(false);
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [tags, setTags] = useState<string[]>([]);
+  const [colors, setColors] = useState<string[]>([]);
+  const [materials, setMaterials] = useState<string[]>([]);
+  const [features, setFeatures] = useState<string[]>([]);
+  const [specification, setSpecification] = useState<Record<string, string>>({});
 
-  const previews = useMemo(
-    () => files.map((f) => ({ name: f.name, url: URL.createObjectURL(f) })),
-    [files]
-  );
+  const [imagePreviews, setImagePreviews] = useState<{ name: string; url: string; base64: string }[]>([]);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const onChange =
     (key: keyof FormValues) =>
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const v = e.target.value;
       setValues((s) => ({
         ...s,
-        [key]: key === "price" ? (v === "" ? "" : Number(v)) : v,
+        [key]:
+          key === "price" || key === "rating"
+            ? (v === "" ? "" : Number(v))
+            : v,
       }));
     };
 
-  function handleFiles(newFiles: FileList | File[]) {
+  /** ---------- Arrays simples (tags, colors, materials, features) ---------- */
+  const pushUnique = (arr: string[], v: string) =>
+    v.trim() && !arr.includes(v.trim()) ? [...arr, v.trim()] : arr;
+
+  const addTag = () => {
+    setTags((a) => pushUnique(a, values.tagInput));
+    setValues((s) => ({ ...s, tagInput: "" }));
+  };
+  const addColor = () => {
+    setColors((a) => pushUnique(a, values.colorInput));
+    setValues((s) => ({ ...s, colorInput: "" }));
+  };
+  const addMaterial = () => {
+    setMaterials((a) => pushUnique(a, values.materialInput));
+    setValues((s) => ({ ...s, materialInput: "" }));
+  };
+  const addFeature = () => {
+    setFeatures((a) => pushUnique(a, values.featureInput));
+    setValues((s) => ({ ...s, featureInput: "" }));
+  };
+
+  const removeFrom = (arr: string[], setter: (v: string[]) => void, v: string) =>
+    setter(arr.filter((x) => x !== v));
+
+  const addSpec = () => {
+    const k = values.specKey.trim();
+    const v = values.specValue.trim();
+    if (!k || !v) return;
+    setSpecification((s) => ({ ...s, [k]: v }));
+    setValues((st) => ({ ...st, specKey: "", specValue: "" }));
+  };
+  const removeSpec = (k: string) => {
+    setSpecification(({ [k]: _, ...rest }) => rest);
+  };
+
+  async function handleFiles(newFiles: FileList | File[]) {
     const accepted = Array.from(newFiles).filter((f) => f.type.startsWith("image/"));
-    setFiles((prev) => {
-      const bySig = new Set(prev.map((p) => `${p.name}_${p.size}`));
-      const uniq = accepted.filter((f) => !bySig.has(`${f.name}_${f.size}`));
-      return [...prev, ...uniq].slice(0, 6);
-    });
+    const newPreviews = await Promise.all(
+      accepted.slice(0, 6 - imagePreviews.length).map(async (file) => ({
+        name: file.name,
+        url: URL.createObjectURL(file),
+        base64: await fileToBase64(file),
+      }))
+    );
+    setImagePreviews((prev) => [...prev, ...newPreviews].slice(0, 6));
   }
 
-  function onDrop(e: React.DragEvent<HTMLDivElement>) {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-    if (e.dataTransfer.files?.length) handleFiles(e.dataTransfer.files);
-  }
-
-  function onBrowse() {
-    inputRef.current?.click();
-  }
-
+  /** ---------- submit ---------- */
   function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (!values.title || values.price === "" || !values.category) return;
-    onNext?.({ values: values as FormValues, files });
+    if (
+      !values.name ||
+      values.price === "" ||
+      !values.currency ||
+      !values.category
+    ) {
+      alert("Faltan campos obligatorios: name, price, currency, category.");
+      return;
+    }
+
+    // Usar las imágenes en Base64 en lugar de blob URLs
+    const images = imagePreviews.length > 0 ? imagePreviews.map((p) => p.base64) : [];
+    const mainImage = images[0] ?? PLACEHOLDER;
+
+    // Crea el objeto con la forma de tu Product del slice
+    const newProduct = {
+      id: Date.now(),
+      name: values.name,
+      description: values.description || "New product added",
+      price: Number(values.price),
+      currency: values.currency,
+      rating: Number(values.rating || 0) || 0,
+      image: mainImage,                          // imagen principal en Base64
+      images: images.length ? images : [PLACEHOLDER],  // galería en Base64
+      category: values.category,
+      tags,
+      colors,
+      materials,
+      features,
+      specification,
+    };
+
+    dispatch(addProduct(newProduct));
+    // reset
+    setValues({
+      name: "",
+      price: "",
+      currency: "GLD",
+      description: "",
+      category: "",
+      rating: 5,
+      tagInput: "",
+      colorInput: "",
+      materialInput: "",
+      featureInput: "",
+      specKey: "",
+      specValue: "",
+    });
+    setTags([]);
+    setColors([]);
+    setMaterials([]);
+    setFeatures([]);
+    setSpecification({});
+    setImagePreviews([]);
+    alert("Producto agregado correctamente");
   }
 
   return (
     <section className="w-full min-h-screen bg-[url('/images/hextech-bg.jpg')] bg-cover bg-center">
-      <div className="mx-auto max-w-5xl px-4 py-10">
+      <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="rounded-2xl bg-white/95 backdrop-blur shadow-xl p-6 sm:p-8">
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-wide text-[#0A0F1C] mb-6">
-            PRODUCT
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#0A0F1C] mb-6">
+            Add product
           </h1>
 
           <form onSubmit={submit} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* --------- Columna izquierda: campos básicos --------- */}
             <div className="space-y-5">
-              <div>
-                <label className="block text-sm font-semibold text-[#0A0F1C] mb-1">
-                  Title
-                </label>
+              <label className="block">
+                <span className="text-sm font-semibold">Name *</span>
                 <input
                   type="text"
-                  placeholder="Title"
-                  value={values.title}
-                  onChange={onChange("title")}
-                  className="w-full rounded-md border border-gray-300 px-4 py-2.5 outline-none focus:ring-2 focus:ring-[#1C6CE5]"
+                  placeholder="Product name"
+                  value={values.name}
+                  onChange={onChange("name")}
+                  className="w-full border rounded-md px-4 py-2.5"
                 />
+              </label>
+
+              <div className="grid grid-cols-2 gap-3">
+                <label className="block">
+                  <span className="text-sm font-semibold">Price *</span>
+                  <input
+                    type="number"
+                    min={0}
+                    placeholder="Price"
+                    value={values.price}
+                    onChange={onChange("price")}
+                    className="w-full border rounded-md px-4 py-2.5"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="text-sm font-semibold">Currency *</span>
+                  <input
+                    type="text"
+                    placeholder="GLD"
+                    value={values.currency}
+                    onChange={onChange("currency")}
+                    className="w-full border rounded-md px-4 py-2.5"
+                  />
+                </label>
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-[#0A0F1C] mb-1">
-                  Price
-                </label>
+              <label className="block">
+                <span className="text-sm font-semibold">Category *</span>
+                <input
+                  type="text"
+                  placeholder="Hextech Gear"
+                  value={values.category}
+                  onChange={onChange("category")}
+                  className="w-full border rounded-md px-4 py-2.5"
+                />
+              </label>
+
+              <label className="block">
+                <span className="text-sm font-semibold">Description</span>
+                <textarea
+                  placeholder="Short description"
+                  value={values.description}
+                  onChange={onChange("description")}
+                  rows={4}
+                  className="w-full border rounded-md px-4 py-2.5"
+                />
+              </label>
+
+              <label className="block">
+                <span className="text-sm font-semibold">Rating</span>
                 <input
                   type="number"
                   min={0}
-                  placeholder="Price"
-                  value={values.price}
-                  onChange={onChange("price")}
-                  className="w-full rounded-md border border-gray-300 px-4 py-2.5 outline-none focus:ring-2 focus:ring-[#1C6CE5] [-moz-appearance:textfield]"
+                  max={5}
+                  step={0.1}
+                  value={values.rating}
+                  onChange={onChange("rating")}
+                  className="w-full border rounded-md px-4 py-2.5"
                 />
-              </div>
+              </label>
 
+              {/* Tags */}
               <div>
-                <label className="block text-sm font-semibold text-[#0A0F1C] mb-1">
-                  Category
-                </label>
-                <input
-                  type="text"
-                  placeholder="Category"
-                  value={values.category}
-                  onChange={onChange("category")}
-                  className="w-full rounded-md border border-gray-300 px-4 py-2.5 outline-none focus:ring-2 focus:ring-[#1C6CE5]"
-                />
+                <span className="text-sm font-semibold">Tags</span>
+                <div className="flex gap-2 mt-1">
+                  <input
+                    type="text"
+                    value={values.tagInput}
+                    onChange={onChange("tagInput")}
+                    className="flex-1 border rounded-md px-3 py-2"
+                    placeholder="hextech, gauntlet, power…"
+                  />
+                  <button type="button" onClick={addTag} className="px-3 py-2 rounded-md bg-[#1C6CE5] text-white">
+                    Add
+                  </button>
+                </div>
+                {!!tags.length && (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {tags.map((t) => (
+                      <span
+                        key={t}
+                        className="text-xs bg-gray-200 rounded-full px-2 py-1 cursor-pointer"
+                        onClick={() => removeFrom(tags, setTags, t)}
+                        title="Remove"
+                      >
+                        {t} ✕
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
 
-              <button
-                type="submit"
-                className="inline-flex items-center justify-center rounded-lg bg-[#1C6CE5] hover:bg-[#1656b8] text-white font-semibold px-6 py-3 transition"
-                disabled={!values.title || values.price === "" || !values.category}
-              >
-                Next
-              </button>
+              {/* Colors */}
+              <div>
+                <span className="text-sm font-semibold">Colors (hex)</span>
+                <div className="flex gap-2 mt-1">
+                  <input
+                    type="text"
+                    value={values.colorInput}
+                    onChange={onChange("colorInput")}
+                    className="flex-1 border rounded-md px-3 py-2"
+                    placeholder="#F7C84B"
+                  />
+                  <button type="button" onClick={addColor} className="px-3 py-2 rounded-md bg-[#1C6CE5] text-white">
+                    Add
+                  </button>
+                </div>
+                {!!colors.length && (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {colors.map((c) => (
+                      <span
+                        key={c}
+                        className="text-xs bg-gray-200 rounded-full px-2 py-1 cursor-pointer"
+                        onClick={() => removeFrom(colors, setColors, c)}
+                        title="Remove"
+                      >
+                        {c} ✕
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
-            <div>
+            {/* --------- Columna derecha: imágenes + listas avanzadas --------- */}
+            <div className="space-y-6">
+              {/* Uploader */}
               <div
-                onDragOver={(e) => {
-                  e.preventDefault();
-                  setIsDragging(true);
-                }}
-                onDragLeave={() => setIsDragging(false)}
-                onDrop={onDrop}
-                className={[
-                  "relative h-[300px] sm:h-[360px] rounded-xl border-2 border-dashed",
-                  isDragging ? "border-[#1C6CE5] bg-blue-50/40" : "border-gray-300 bg-gray-100/70",
-                  "flex items-center justify-center text-center px-4",
-                ].join(" ")}
+                className="relative h-[300px] rounded-xl border-2 border-dashed border-gray-300 bg-gray-100/70 flex items-center justify-center"
+                onClick={() => inputRef.current?.click()}
               >
                 <input
                   ref={inputRef}
@@ -144,70 +337,121 @@ const AddProductForm: React.FC<Props> = ({ initialValues, onNext }) => {
                   className="hidden"
                   onChange={(e) => e.target.files && handleFiles(e.target.files)}
                 />
-
-                {previews.length === 0 ? (
-                  <div>
-                    <div className="mx-auto mb-3 w-14 h-14 rounded-full bg-white/70 flex items-center justify-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-8 h-8 text-gray-700"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M3 16.5V7.5A2.5 2.5 0 0 1 5.5 5h13A2.5 2.5 0 0 1 21 7.5v9A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5Z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="m3 14 4.5-4.5a2 2 0 0 1 2.828 0L15 14m-2-2 1-1a2 2 0 0 1 2.828 0L21 13"
-                        />
-                        <circle cx="8" cy="8.5" r="1" />
-                      </svg>
-                    </div>
-                    <p className="text-lg font-semibold text-[#0A0F1C]">Add photos</p>
-                    <p className="text-sm text-gray-600 mt-1">
-                      Drag & drop or{" "}
-                      <button
-                        type="button"
-                        onClick={onBrowse}
-                        className="text-[#1C6CE5] font-semibold underline underline-offset-2"
-                      >
-                        browse files
-                      </button>
-                    </p>
-                    <p className="text-xs text-gray-500 mt-2">PNG, JPG up to 6 images</p>
-                  </div>
+                {imagePreviews.length === 0 ? (
+                  <p className="text-[#1C6CE5] font-semibold underline cursor-pointer">Add images (max 6)</p>
                 ) : (
-                  <div className="w-full h-full p-3 overflow-y-auto">
-                    <div className="grid grid-cols-3 gap-3">
-                      {previews.map((p) => (
-                        <div
-                          key={p.url}
-                          className="relative w-full h-24 rounded-md overflow-hidden bg-white"
-                          title={p.name}
-                        >
-                          <img src={p.url} className="w-full h-full object-cover" />
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="mt-4">
-                      <button
-                        type="button"
-                        onClick={onBrowse}
-                        className="px-3 py-2 rounded-md bg-white text-[#0A0F1C] border border-gray-300 hover:bg-gray-50"
-                      >
-                        Add more
-                      </button>
-                    </div>
+                  <div className="grid grid-cols-3 gap-3 w-full p-3">
+                    {imagePreviews.map((p) => (
+                      <img key={p.url} src={p.url} className="h-24 object-cover rounded-md" />
+                    ))}
                   </div>
                 )}
               </div>
+
+              {/* Materials */}
+              <div>
+                <span className="text-sm font-semibold">Materials</span>
+                <div className="flex gap-2 mt-1">
+                  <input
+                    type="text"
+                    value={values.materialInput}
+                    onChange={onChange("materialInput")}
+                    className="flex-1 border rounded-md px-3 py-2"
+                    placeholder="Alloyed hexsteel shell…"
+                  />
+                  <button type="button" onClick={addMaterial} className="px-3 py-2 rounded-md bg-[#1C6CE5] text-white">
+                    Add
+                  </button>
+                </div>
+                {!!materials.length && (
+                  <ul className="list-disc ml-5 mt-2 space-y-1">
+                    {materials.map((m) => (
+                      <li key={m} className="cursor-pointer" onClick={() => removeFrom(materials, setMaterials, m)}>
+                        {m}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              {/* Features */}
+              <div>
+                <span className="text-sm font-semibold">Product features</span>
+                <div className="flex gap-2 mt-1">
+                  <input
+                    type="text"
+                    value={values.featureInput}
+                    onChange={onChange("featureInput")}
+                    className="flex-1 border rounded-md px-3 py-2"
+                    placeholder="Sonic pulse generator…"
+                  />
+                  <button type="button" onClick={addFeature} className="px-3 py-2 rounded-md bg-[#1C6CE5] text-white">
+                    Add
+                  </button>
+                </div>
+                {!!features.length && (
+                  <ul className="list-disc ml-5 mt-2 space-y-1">
+                    {features.map((f) => (
+                      <li key={f} className="cursor-pointer" onClick={() => removeFrom(features, setFeatures, f)}>
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              {/* Specification (key/value) */}
+              <div>
+                <span className="text-sm font-semibold">Specification (key/value)</span>
+                <div className="grid grid-cols-2 gap-2 mt-1">
+                  <input
+                    type="text"
+                    value={values.specKey}
+                    onChange={onChange("specKey")}
+                    placeholder="Weight"
+                    className="border rounded-md px-3 py-2"
+                  />
+                  <input
+                    type="text"
+                    value={values.specValue}
+                    onChange={onChange("specValue")}
+                    placeholder="18 kg"
+                    className="border rounded-md px-3 py-2"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={addSpec}
+                  className="mt-2 px-3 py-2 rounded-md bg-[#1C6CE5] text-white"
+                >
+                  Add spec
+                </button>
+
+                {Object.keys(specification).length > 0 && (
+                  <div className="mt-3 border rounded-md p-3 bg-gray-50">
+                    {Object.entries(specification).map(([k, v]) => (
+                      <div
+                        key={k}
+                        className="flex items-center justify-between border-b last:border-b-0 py-1 cursor-pointer"
+                        onClick={() => removeSpec(k)}
+                        title="Remove"
+                      >
+                        <span className="font-medium">{k}</span>
+                        <span className="text-gray-700">{v}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="lg:col-span-2">
+              <button
+                type="submit"
+                className="w-full rounded-lg bg-[#1C6CE5] hover:bg-[#1656b8] text-white font-semibold px-6 py-3"
+              >
+                Add Product
+              </button>
             </div>
           </form>
         </div>
