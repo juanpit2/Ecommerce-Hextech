@@ -15,6 +15,7 @@ import UserProfile from "./pages/AccountPage.tsx";
 import ChatPage from "./pages/ChatPage.tsx";
 import ProductForm from "./pages/ProductPage.tsx";
 import ProductEdit from "./pages/ProductEdit.tsx";
+import ReviewWindow from './components/features/reviews/ReviewWindow'
 import App from "./App.tsx";
 
 const Routes = createBrowserRouter([
@@ -62,6 +63,10 @@ const Routes = createBrowserRouter([
   {
     path: "/ProductForm",
     element: <ProductForm />,
+  },
+  {
+    path: "/ReviewWindow",
+    element: <ReviewWindow />,
   },
   {
     path: "*",
