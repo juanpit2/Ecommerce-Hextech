@@ -28,10 +28,10 @@ function Home() {
       {/* 
         Contenedor vertical con espaciado global:
         - pt-60 en desktop para compensar navbar fija alta
-        - pt-20 en móvil (max-sm) para reducir espacio superior
+        - pt-16 en móvil (max-sm) para reducir espacio superior
         - space-y-* para separar secciones verticalmente
       */}
-      <div className="pt-60 max-sm:pt-20 space-y-20 max-sm:space-y-8">
+      <div className="pt-60 max-sm:pt-16 space-y-20 max-sm:space-y-6">
 
         {/* Navbar fija en top */}
         <Navbar />
@@ -46,11 +46,11 @@ function Home() {
         <Functionalities />
 
         {/* Grid de productos — se muestran 4 tarjetas */}
-        <div className="flex flex-wrap justify-center gap-6 p-6">
+        <div className="flex flex-wrap justify-center gap-6 p-6 max-sm:gap-3 max-sm:p-3 max-sm:px-2">
           {products.slice(0, 4).map((product) => (
             <div
               key={product.id}
-              className="cursor-pointer"
+              className="cursor-pointer max-sm:w-[calc(50%-6px)] max-sm:flex max-sm:justify-center"
               onClick={() => openProduct(product.id)}
             >
               <ProductCard
@@ -66,7 +66,7 @@ function Home() {
         </div>
 
         {/* Carrusel horizontal de reseñas con indicadores */}
-        <div className="max-w-6xl mx-auto px-4">
+        <div className="max-w-6xl mx-auto px-4 max-sm:px-2">
           <ReviewList />
         </div>
 

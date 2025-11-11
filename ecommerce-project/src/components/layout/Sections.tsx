@@ -11,7 +11,7 @@ export default function Sections() {
       <div
         className="
           relative flex items-center justify-center gap-10
-          max-sm:flex-col max-sm:gap-4 max-sm:justify-center max-sm:items-center
+          max-sm:flex-col max-sm:gap-3 max-sm:justify-center max-sm:items-center max-sm:px-4
         "
       >
         {/* 
@@ -21,12 +21,12 @@ export default function Sections() {
 
         {/* Sección de Piltover */}
         <NavLink to="/Piltover">
-          <div className="w-[480px] md:w-[560px] lg:w-[640px] max-sm:w-[80%]">
+          <div className="w-[480px] md:w-[560px] lg:w-[640px] max-sm:w-full max-sm:max-w-[340px]">
             <img
               src={piltover}
               alt="Piltover Section"
               className="
-                mx-auto block object-cover rounded-2xl
+                mx-auto block object-cover rounded-2xl max-sm:rounded-xl
                 w-full h-auto
                 transform transition-transform duration-200 ease-in-out
                 hover:scale-105 focus-visible:scale-105 cursor-pointer
@@ -41,12 +41,12 @@ export default function Sections() {
           </div>
         </NavLink>
         {/* Sección de Zaun */}
-        <div className="w-[480px] md:w-[560px] lg:w-[640px] max-sm:w-[80%]">
+        <div className="w-[480px] md:w-[560px] lg:w-[640px] max-sm:w-full max-sm:max-w-[340px]">
           <img
             src={zaun}
             alt="Zaun Section"
             className="
-              mx-auto block object-cover rounded-2xl
+              mx-auto block object-cover rounded-2xl max-sm:rounded-xl
               w-full h-auto
               transform transition-transform duration-200 ease-in-out
               hover:scale-105 focus-visible:scale-105 cursor-pointer

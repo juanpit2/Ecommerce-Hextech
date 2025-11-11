@@ -6,8 +6,8 @@ export type Product = {
   description?: string;
 
   // imágenes
-  image?: string;        // portada opcional
-  images?: string[];     // galería opcional
+  image?: string;        
+  images?: string[];    
 
   // meta opcional
   rating?: number;

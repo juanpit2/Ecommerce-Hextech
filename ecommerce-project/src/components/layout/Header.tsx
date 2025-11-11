@@ -1,6 +1,5 @@
 // Importación de íconos SVG usados en la barra de navegación
 import cart from "../../../public/images/icons/Cart Large Minimalistic.svg"
-import piquito from "../../../public/images/icons/Vector piquito.svg"
 import persona from "../../../public/images/icons/Vector Icono Persona.svg"
 
 // Importación de hooks de React para manejo de estado, referencias y efectos
@@ -37,7 +36,7 @@ function Navbar() {
           <div className="flex-1 hidden md:flex items-center justify-start">
             <div className="flex items-center text-gray-700 font-medium gap-12 pl-2">
               {/* Products - disabled dropdown (kept as simple link/label) */}
-              <NavLink to="/products" className="inline-flex items-center gap-2 hover:text-purple-300 transition-colors duration-300 ease-in-out">
+              <NavLink to="/piltover" className="inline-flex items-center gap-2 hover:text-purple-300 transition-colors duration-300 ease-in-out">
                 <span className="font-semibold">Products</span>
               </NavLink>
 
