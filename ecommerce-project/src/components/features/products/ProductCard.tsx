@@ -69,13 +69,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
       */}
 
       {/* Contenido textual e interactivo de la tarjeta */}
-      <div className="mt-24 flex flex-col gap-3">
+      <div className="mt-40 flex flex-col min-h-[140px] justify-between gap-4">
         {/* Nombre del producto */}
-        <h3 className="text-2xl font-bold">{name}</h3>
+        <h3 className="text-2xl font-bold truncate">{name}</h3>
 
         {/* Rating con estrellas y valor numérico */}
-        <div className="flex items-center gap-2 bg-white/90 rounded-full px-3 py-1.5 w-fit">
-          <div className="flex gap-0.5">
+        <div className="flex items-center gap-3 bg-white/90 rounded-full px-4 py-2 w-fit">
+          <div className="flex gap-1">
             {Array.from({ length: 5 }).map((_, i) => (
               <span key={i} className="text-sm">
                 {i < Math.floor(rating) ? "⭐" : "☆"}
@@ -85,19 +85,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <span className="text-xs font-bold text-gray-800">{rating}</span>
         </div>
 
-        {/* 
-          - Genera 5 estrellas.
-          - Las llenas (⭐) corresponden al número entero del rating.
-          - Muestra el valor numérico al lado derecho.
-        */}
-
         {/* Descripción del producto */}
-        <p className="text-sm text-gray-300 leading-relaxed">{description}</p>
+        <p className="text-sm text-gray-300 leading-relaxed line-clamp-2">{description}</p>
 
         {/* Botón de compra */}
         <button
           className="
-            mt-4 w-full shadow-2xl
+            mt-2 w-full shadow-2xl
             bg-gradient-to-b from-[#3676B7] to-[#1C6CE5]
             hover:opacity-90 text-white font-semibold py-2 rounded-lg transition
           "

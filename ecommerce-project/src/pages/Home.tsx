@@ -6,14 +6,23 @@ import Functionalities from '../components/layout/Functionalities'
 import ZaunLayout from '../components/layout/Zaun'
 import Footer from '../components/layout/Footer'
 
-// Productos (landing)
-import ProductCardLanding from '../components/features/products/ProductCardLanding'
-import products from "../components/data/productsLanding.json"
+// Productos
+import ProductCard from '../components/features/products/ProductCard'
+import products from "../components/data/products.json"
 
 // Reseñas
 import ReviewList from '../components/features/reviews/ReviewList'
 
+// Navegación
+import { useNavigate } from 'react-router-dom'
+
 function Home() {
+  const navigate = useNavigate();
+
+  const openProduct = (id: number) => {
+    navigate(`/product/${id}`, { state: { id } });
+  };
+
   return (
     <>  
       {/* 
@@ -36,10 +45,23 @@ function Home() {
         {/* Cuadrícula de funcionalidades (responsive) */}
         <Functionalities />
 
-        {/* Grid de productos (landing) — se muestran en flex-wrap y centrados */}
+        {/* Grid de productos — se muestran 4 tarjetas */}
         <div className="flex flex-wrap justify-center gap-6 p-6">
-          {products.map((product) => (
-            <ProductCardLanding key={product.id} product={product} />
+          {products.slice(0, 4).map((product) => (
+            <div
+              key={product.id}
+              className="cursor-pointer"
+              onClick={() => openProduct(product.id)}
+            >
+              <ProductCard
+                name={product.name}
+                price={product.price}
+                currency={product.currency}
+                rating={product.rating}
+                image={product.image}
+                description={product.description}
+              />
+            </div>
           ))}
         </div>
 
