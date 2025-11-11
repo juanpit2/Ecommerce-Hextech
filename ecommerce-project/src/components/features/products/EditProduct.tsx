@@ -263,7 +263,7 @@ const EditProduct: React.FC = () => {
 
           {!selectedProduct ? (
             <div className="text-center py-12 text-gray-500">
-              <p className="text-xl">👆 Select a product from the dropdown to start editing</p>
+              <p className="text-xl">Select a product from the dropdown to start editing</p>
             </div>
           ) : (
             <form onSubmit={submit} className="grid grid-cols-1 lg:grid-cols-2 gap-8">
