@@ -84,4 +84,4 @@ const saveToLocalStorage = (state: ChatState) => {
 };
 
 export const { setMessages, sendMessage, setSelectedChat, clearMessages, addMessage } = chatSlice.actions;
-export default chatSlice.reducer;
+export default chatSlice.reducer

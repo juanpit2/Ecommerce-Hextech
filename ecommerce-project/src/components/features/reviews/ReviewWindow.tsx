@@ -1,16 +1,11 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import ReviewForm from './ReviewForm';
-import reviewsData from '../../data/reviews.json';
-import type { ReviewCard } from '../../../Type/Reviews';
+import type { RootState } from '../../../store/store';
 
 const ReviewWindow = () => {
-  const [reviews, setReviews] = useState<ReviewCard[]>(reviewsData);
+  const reviews = useSelector((state: RootState) => state.reviews.reviews);
   const [showForm, setShowForm] = useState(false);
-
-  const handleAddReview = (newReview: ReviewCard) => {
-    setReviews(prev => [newReview, ...prev]);
-    setShowForm(false);
-  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -56,7 +51,6 @@ const ReviewWindow = () => {
 
       {showForm && (
         <ReviewForm
-          onAddReview={handleAddReview}
           onClose={() => setShowForm(false)}
         />
       )}

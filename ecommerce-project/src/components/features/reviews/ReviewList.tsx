@@ -1,21 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import ReviewCard from "./ReviewCard";
-import ReviewForm from "./ReviewForm";
-import reviewsData from "../../data/reviews.json";
-
-// Tipo para cada reseña proveniente del JSON
-type Review = {
-  id: string;         // Identificador único de la reseña
-  name: string;       // Nombre del autor de la reseña
-  rating: number;     // Calificación (0–5)
-  description: string;// Texto de la reseña
-};
-
-// Normaliza el JSON tipándolo como arreglo de Review
-const reviews: Review[] = reviewsData as Review[];
+import type { RootState } from "../../../store/store";
 
 // Lista de reseñas con carrusel horizontal y paginación por "snap"
 const ReviewList: React.FC = () => {
+  const reviews = useSelector((state: RootState) => state.reviews.reviews);
   // Referencia al contenedor scrollable
   const containerRef = useRef<HTMLDivElement | null>(null);
   // Referencias a cada item para medir su ancho (incluyendo gap)

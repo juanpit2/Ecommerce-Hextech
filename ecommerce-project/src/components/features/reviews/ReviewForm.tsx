@@ -1,12 +1,14 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addReview } from '../../../store/reviewSlice';
 import type { ReviewCard } from '../../../Type/Reviews';
 
 type ReviewFormProps = {
-    onAddReview: (review: ReviewCard) => void;
     onClose: () => void;
 };
 
-const ReviewForm: React.FC<ReviewFormProps> = ({ onAddReview, onClose }) => {
+const ReviewForm: React.FC<ReviewFormProps> = ({ onClose }) => {
+    const dispatch = useDispatch();
     const [formData, setFormData] = useState({
     name: '',
     rating: 5,
@@ -50,8 +52,9 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onAddReview, onClose }) => {
         description: formData.description
     };
 
-    onAddReview(newReview);
+    dispatch(addReview(newReview));
     setFormData({ name: '', rating: 5, description: '' });
+    onClose();
     };
 
     return (

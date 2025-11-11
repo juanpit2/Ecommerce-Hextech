@@ -1,21 +1,55 @@
-import { useState, useEffect } from 'react';
+
+
+import { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setMessages, setSelectedChat, sendMessage } from '../../../store/chatSlice';
 import type { MessageCard } from '../../../Type/Messages';
 import messagesData from '../../data/messages.json';
-import ChatWindow from './ChatWindow';
-
+import type { RootState } from '../../../store/store';
 
 const MessageList = () => {
-  const [allMessages] = useState<MessageCard[]>(messagesData);
+  const dispatch = useDispatch();
+  const { messages, selectedChat } = useSelector((state: RootState) => state.chat);
+  const [messageInput, setMessageInput] = useState('');
   const [currentMessages, setCurrentMessages] = useState<MessageCard[]>([]);
-  const [selectedChat, setSelectedChat] = useState('@Blessd');
-  
-  // Filtrar mensajes cuando cambie el chat seleccionado
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Cargar mensajes iniciales solo una vez
   useEffect(() => {
-    const filtered = allMessages.filter(msg => 
-      msg.sender === selectedChat || (msg.isUser && msg.sender === "You")
-    );
-    setCurrentMessages(filtered);
-  }, [selectedChat, allMessages]);
+    const chatUsers = ['@Blessd', '@Pirlo', '@Kris R', '@Feid'];
+    
+    // Cargar datos iniciales de messagesData para cada chat si no existen
+    chatUsers.forEach((chatId) => {
+      if (!messages[chatId] || messages[chatId].length === 0) {
+        const chatMessages = messagesData.filter(msg => 
+          msg.sender === chatId || (msg.sender === "You" && chatId === '@Blessd')
+        );
+        if (chatMessages.length > 0) {
+          dispatch(setMessages({ chatId, messages: chatMessages }));
+        }
+      }
+    });
+  }, [dispatch, messages]);
+
+  // Obtener mensajes del chat actual
+  useEffect(() => {
+    const chatMessages = messages[selectedChat] || [];
+    setCurrentMessages(chatMessages);
+  }, [selectedChat, messages]);
+
+  // Scroll automático al último mensaje
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.parentElement?.scroll({
+        top: messagesEndRef.current.parentElement.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [currentMessages]);
 
   const chatUsers = [
     { id: '@Blessd', initial: 'B', color: 'bg-yellow-200' },
@@ -23,6 +57,19 @@ const MessageList = () => {
     { id: '@Kris R', initial: 'K', color: 'bg-purple-200' },
     { id: '@Feid', initial: 'F', color: 'bg-blue-200' }
   ];
+
+  const handleSendMessage = () => {
+    if (messageInput.trim()) {
+      dispatch(sendMessage({ text: messageInput, selectedChat }));
+      setMessageInput('');
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSendMessage();
+    }
+  };
 
   return (
     <div className="flex h-full bg-gray-50">
@@ -34,7 +81,7 @@ const MessageList = () => {
             {chatUsers.map((chat) => (
               <button
                 key={chat.id}
-                onClick={() => setSelectedChat(chat.id)}
+                onClick={() => dispatch(setSelectedChat(chat.id))}
                 className={`w-full flex items-center gap-3 p-2 rounded-lg
                   ${selectedChat === chat.id 
                     ? 'bg-yellow-100' 
@@ -99,6 +146,7 @@ const MessageList = () => {
               </div>
             </div>
           ))}
+          <div ref={messagesEndRef} />
         </div>
 
         {/* Input de mensaje (sin border) */}
@@ -107,9 +155,15 @@ const MessageList = () => {
             <input
               type="text"
               placeholder="Type a message..."
+              value={messageInput}
+              onChange={(e) => setMessageInput(e.target.value)}
+              onKeyPress={handleKeyPress}
               className="flex-1 px-4 py-2 bg-gray-50 rounded-lg text-sm placeholder-gray-400 focus:outline-none"
             />
-            <button className="bg-blue-500 text-white px-6 py-2 rounded-lg text-sm font-medium">
+            <button 
+              onClick={handleSendMessage}
+              className="bg-blue-500 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition"
+            >
               Send
             </button>
           </div>
