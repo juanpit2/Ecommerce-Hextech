@@ -22,7 +22,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <div
       className="
-        relative bg-[#1A155A] text-white rounded-2xl p-6 w-[300px] shadow-lg
+  relative bg-[#1A155A] text-white rounded-2xl p-6 w-[300px] shadow-lg h-[400px]
         flex flex-col justify-between
         transition-transform duration-300 hover:-translate-y-2
       "
@@ -69,7 +69,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       */}
 
       {/* Contenido textual e interactivo de la tarjeta */}
-      <div className="mt-24 flex flex-col gap-3">
+  <div className="mt-24 flex flex-col gap-3 flex-1 justify-between">
         {/* Nombre del producto */}
         <h3 className="text-2xl font-bold">{name}</h3>
 
@@ -92,15 +92,16 @@ const ProductCard: React.FC<ProductCardProps> = ({
         */}
 
         {/* Descripción del producto */}
-        <p className="text-sm text-gray-300 leading-relaxed">{description}</p>
+        <p
+          className="text-sm text-gray-300 leading-relaxed overflow-hidden"
+          style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical' as any }}
+        >
+          {description}
+        </p>
 
-        {/* Botón de compra */}
+        {/* Botón de compra (anclado al fondo) */}
         <button
-          className="
-            mt-4 w-full shadow-2xl
-            bg-gradient-to-b from-[#3676B7] to-[#1C6CE5]
-            hover:opacity-90 text-white font-semibold py-2 rounded-lg transition
-          "
+          className="w-full shadow-2xl bg-gradient-to-b from-[#3676B7] to-[#1C6CE5] hover:opacity-90 text-white font-semibold py-2 rounded-lg transition"
         >
           Buy now
         </button>

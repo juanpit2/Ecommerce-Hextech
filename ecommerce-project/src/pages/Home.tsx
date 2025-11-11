@@ -7,8 +7,8 @@ import ZaunLayout from '../components/layout/Zaun'
 import Footer from '../components/layout/Footer'
 
 // Productos (landing)
-import ProductCardLanding from '../components/features/products/ProductCardLanding'
-import products from "../components/data/productsLanding.json"
+import ProductCard from '../components/features/products/ProductCard'
+import products from "../components/data/products.json"
 
 // Reseñas
 import ReviewList from '../components/features/reviews/ReviewList'
@@ -36,10 +36,24 @@ function Home() {
         {/* Cuadrícula de funcionalidades (responsive) */}
         <Functionalities />
 
-        {/* Grid de productos (landing) — se muestran en flex-wrap y centrados */}
-        <div className="flex flex-wrap justify-center gap-6 p-6">
-          {products.map((product) => (
-            <ProductCardLanding key={product.id} product={product} />
+        {/* Subtitle "Recently Added" */}
+        <div className="max-w-6xl mx-auto px-4">
+          <h2 className="text-2xl font-bold text-gray-900">Recently Added</h2>
+        </div>
+
+        {/* Grid de productos (landing) — 3 columnas con ProductCard */}
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center py-15 max-w-6xl mx-auto px-4">
+          {products.slice(0, 3).map((product) => (
+            <ProductCard
+              key={product.id}
+              name={product.name}
+              price={product.price}
+              currency={product.currency}
+              rating={product.rating}
+              image={product.image}
+              description={product.description}
+            />
           ))}
         </div>
 

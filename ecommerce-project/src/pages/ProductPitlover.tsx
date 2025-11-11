@@ -8,7 +8,7 @@ export default function ProductsPage() {
   return (
     <>
       <Navbar />
-      <div className="pt-48 px-4">
+      <div className="pt-15 px-6">
         <BannerProducts />
       
         <ProductsGrid />

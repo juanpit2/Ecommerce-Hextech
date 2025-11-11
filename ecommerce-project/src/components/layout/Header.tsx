@@ -47,49 +47,32 @@ function Navbar() {
             {/* Menú visible solo en pantallas grandes */}
             <div className="hidden md:block">
               <div className="flex items-center">
-                <div className="flex items-center text-gray-700 font-medium gap-12">
+                <div className="flex items-center px-10 text-gray-700 font-medium gap-12">
                   
                   {/* Menú desplegable de "Products" */}
                   <details className="relative">
                     <summary className="inline-flex items-center gap-2 cursor-pointer hover:text-purple-300 transition-colors duration-300 ease-in-out list-none">
                       <span className="font-semibold">Products</span>
-                      <img src={piquito} alt="" className="w-3 h-3 object-contain" />
+                      
                     </summary>
                     {/* Submenú */}
-                    <div className="absolute left-0 mt-2 w-44 bg-white border border-gray-200 shadow-md rounded-md py-1 z-50">
-                      <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Weapons</a>
-                      <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Technology</a>
-                      <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Materials</a>
-                      <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Books</a>
-                    </div>
+                    
                   </details>
 
                   {/* Menú "Piltover" */}
                   <details className="relative">
                     <summary className="inline-flex items-center gap-2 cursor-pointer hover:text-purple-300 transition-colors duration-300 ease-in-out list-none">
                       <span className="font-semibold">Piltover</span>
-                      <img src={piquito} alt="" className="w-3 h-3 object-contain" />
                     </summary>
-                    <div className="absolute left-0 mt-2 w-44 bg-white border border-gray-200 shadow-md rounded-md py-1 z-50">
-                      <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Weapons</a>
-                      <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Technology</a>
-                      <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Materials</a>
-                      <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Books</a>
-                    </div>
+                   
                   </details>
 
                   {/* Menú "Zaun" */}
                   <details className="relative">
                     <summary className="inline-flex items-center gap-2 cursor-pointer hover:text-purple-300 transition-colors duration-300 ease-in-out list-none">
                       <span className="font-semibold">Zaun</span>
-                      <img src={piquito} alt="" className="w-3 h-3 object-contain" />
                     </summary>
-                    <div className="absolute left-0 mt-2 w-44 bg-white border border-gray-200 shadow-md rounded-md py-1 z-50">
-                      <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Weapons</a>
-                      <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Technology</a>
-                      <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Materials</a>
-                      <a href="#" className="block px-4 py-2 text-sm hover:bg-gray-100">Books</a>
-                    </div>
+                   
                   </details>
                 </div>
               </div>
