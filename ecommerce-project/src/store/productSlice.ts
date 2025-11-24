@@ -7,7 +7,6 @@ type ProductState = { items: Product[] };
 
 const PLACEHOLDER = "/images/placeholder.png";
 
-// Normalizador: respeta lo que venga en el JSON y completa faltantes
 const normalize = (p: any): Product => ({
   id: p.id,
   name: p.name,
@@ -16,7 +15,6 @@ const normalize = (p: any): Product => ({
   description: p.description ?? "",
   rating: p.rating ?? 5,
 
-  // si solo hay 'image', úsala; si hay 'images', mantenlas
   image: p.image ?? p.images?.[0] ?? PLACEHOLDER,
   images: Array.isArray(p.images)
     ? p.images
@@ -26,7 +24,6 @@ const normalize = (p: any): Product => ({
   tags: p.tags ?? [],
   colors: p.colors ?? [],
 
-  // 👇 AQUÍ estaba el problema: preservar lo que viene del JSON
   materials: Array.isArray(p.materials) ? p.materials : [],
   features: Array.isArray(p.features) ? p.features : [],
   specification: p.specification ?? {},
@@ -41,7 +38,6 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     addProduct(state, action: PayloadAction<Product>) {
-      // también normaliza lo que agregas desde el formulario
       state.items.push(normalize(action.payload));
     },
     updateProduct(state, action: PayloadAction<Product>) {
