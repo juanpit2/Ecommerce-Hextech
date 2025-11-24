@@ -1,9 +1,9 @@
+
+
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../store/cartSlice";
 import type { Product } from "../../../Type/ProductView";
-
-type Props = { product: Product };
 
 const normalizeSpec = (spec?: Record<string, string | undefined>) =>
   spec ? Object.fromEntries(Object.entries(spec).map(([k, v]) => [k, v ?? ""])) : {};
@@ -16,6 +16,9 @@ const fixSrc = (src: string) => {
 };
 
 const PLACEHOLDER = "/images/placeholder.png";
+
+
+type Props = { product: Product };
 
 const ProductSection: React.FC<Props> = ({ product }) => {
   const dispatch = useDispatch();

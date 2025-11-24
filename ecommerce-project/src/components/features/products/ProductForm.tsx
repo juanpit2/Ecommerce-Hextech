@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
-import { useAppDispatch } from "../../../store/hooks";
-import { addProduct } from "../../../store/productSlice";
+import { supabase } from "../../../utils/supabaseClient";
 
 /** ---------- Utilidades ---------- */
 const PLACEHOLDER = "/images/placeholder.png";
@@ -31,7 +30,7 @@ type FormValues = {
 };
 
 const AddProductForm: React.FC = () => {
-  const dispatch = useAppDispatch();
+
 
   const [values, setValues] = useState<FormValues>({
     name: "",
@@ -118,7 +117,7 @@ const AddProductForm: React.FC = () => {
   }
 
   /** ---------- submit ---------- */
-  function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (
       !values.name ||
@@ -152,7 +151,13 @@ const AddProductForm: React.FC = () => {
       specification,
     };
 
-    dispatch(addProduct(newProduct));
+    // Insertar en Supabase
+    const { data, error } = await supabase.from('products').insert([newProduct]);
+    if (error) {
+      alert("Error al guardar en Supabase: " + error.message);
+      return;
+    }
+
     // reset
     setValues({
       name: "",
