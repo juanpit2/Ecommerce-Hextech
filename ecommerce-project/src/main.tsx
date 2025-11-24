@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { store } from "./store/store";
 
 import Home from "./pages/Home.tsx";
-import LoginPage from "./pages/LoginPage.tsx";
+import LoginPage from "./pages/LogInPage.tsx";
 import SignInPage from "./pages/SignInPage.tsx";
 import ProductPiltover from "./pages/ProductPitlover.tsx";
 import ProductPiltoverBuy from "./pages/BuyProductPiltover.tsx";

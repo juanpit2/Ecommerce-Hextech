@@ -13,35 +13,35 @@ export default function Functionalities() {
         - Organiza los elementos en una cuadrícula de 2 columnas y 2 filas (2x2).
         - Las imágenes se agrandan y se reduce el espacio vertical para un diseño compacto.
       */}
-      <div className="md:hidden">
-        <div className="grid grid-cols-2 gap-x-1 gap-y-0.5 justify-items-center">
+      <div className="md:hidden px-2">
+        <div className="grid grid-cols-2 gap-x-2 gap-y-1 justify-items-center">
           
           {/* Imagen de Vi */}
           <img
             src={viF}
             alt="Vi Functionalities"
-            className="block object-contain w-[150px] h-auto"
+            className="block object-contain w-[140px] h-auto max-w-full"
           />
 
           {/* Imagen de Jinx */}
           <img
             src={jinxF}
             alt="Jinx Functionalities"
-            className="block object-contain w-[150px] h-auto"
+            className="block object-contain w-[140px] h-auto max-w-full"
           />
 
           {/* Imagen de Caitlyn */}
           <img
             src={caitF}
             alt="Caitlyn Functionalities"
-            className="block object-contain w-[150px] h-auto"
+            className="block object-contain w-[140px] h-auto max-w-full"
           />
 
           {/* Imagen de Ekko */}
           <img
             src={ekkoF}
             alt="Ekko Functionalities"
-            className="block object-contain w-[150px] h-auto"
+            className="block object-contain w-[140px] h-auto max-w-full"
           />
         </div>
       </div>

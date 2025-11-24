@@ -92,6 +92,11 @@ const ProductCardLandingDark: React.FC<Props> = ({ product }) => {
             <span className="text-gray-700 text-xs ml-1">{product.rating}</span>
           </div>
 
+          {/* Nombre del producto */}
+          <p className="text-white text-xs font-semibold text-center truncate w-full px-2 mb-1">
+            {product.name}
+          </p>
+
           {/* Botón principal de acción */}
           <button className="bg-[#2b0073] hover:bg-[#20005a] text-white text-xs font-semibold py-1.5 px-4 rounded-[8px] shadow-[0_3px_12px_rgba(180,100,255,0.45)]">
             Buy now
@@ -173,6 +178,11 @@ const ProductCardLandingDark: React.FC<Props> = ({ product }) => {
             </div>
             <span className="text-gray-700 text-sm ml-1">{product.rating}</span>
           </div>
+
+          {/* Nombre del producto */}
+          <p className="text-white text-sm font-semibold text-center truncate w-full px-4 mb-2 translate-x-[-35px]">
+            {product.name}
+          </p>
 
           {/* Botón de acción con sombra suave y transición */}
           <button className="bg-[#2b0073] hover:bg-[#20005a] text-white text-sm font-semibold py-2.5 px-8 rounded-[8px] shadow-[0_6px_20px_rgba(180,100,255,0.45)] transition duration-300 translate-x-[-50px]">
