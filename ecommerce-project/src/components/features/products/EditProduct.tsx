@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { updateProduct, removeProduct } from "../../../store/productSlice";
+// No usar productos locales ni Redux para edición
+import { supabase } from '../../../utils/supabaseClient';
 import type { Product } from "../../../Type/ProductView";
 
 const PLACEHOLDER = "/images/placeholder.png";
@@ -30,8 +30,9 @@ type FormValues = {
 };
 
 const EditProduct: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const allProducts = useAppSelector((state) => state.products.items);
+  // Solo productos de Supabase
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
 
   const [selectedProductId, setSelectedProductId] = useState<number | null>(null);
   const [values, setValues] = useState<FormValues>({
@@ -57,8 +58,26 @@ const EditProduct: React.FC = () => {
   const [imagePreviews, setImagePreviews] = useState<{ name: string; url: string; base64: string }[]>([]);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
+  // Solo productos reales de Supabase
   const selectedProduct = allProducts.find((p) => p.id === selectedProductId);
 
+  // Cargar productos SOLO desde Supabase al montar y después de update
+  async function fetchProducts() {
+    setLoadingProducts(true);
+    const { data, error } = await supabase.from('products').select('*');
+    if (error) {
+      alert('Error cargando productos de Supabase: ' + error.message);
+      setAllProducts([]);
+    } else {
+      setAllProducts(data || []);
+    }
+    setLoadingProducts(false);
+  }
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  // Actualizar los valores del formulario cuando cambia el producto seleccionado
   useEffect(() => {
     if (!selectedProduct) {
       setValues({
@@ -186,7 +205,8 @@ const EditProduct: React.FC = () => {
     setImagePreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
-  function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent) {
+
     e.preventDefault();
 
     if (!selectedProduct) {
@@ -194,43 +214,57 @@ const EditProduct: React.FC = () => {
       return;
     }
 
-    if (!values.name || values.price === "" || !values.currency || !values.category) {
-      alert("Faltan campos obligatorios: name, price, currency, category.");
+    // Validación de campos obligatorios
+    const missingFields = [];
+    if (!values.name) missingFields.push('nombre');
+    if (values.price === "" || isNaN(Number(values.price))) missingFields.push('precio');
+    if (!values.currency) missingFields.push('moneda');
+    if (!values.category) missingFields.push('categoría');
+
+    if (missingFields.length > 0) {
+      alert('Faltan campos obligatorios: ' + missingFields.join(', '));
       return;
     }
 
     const images = imagePreviews.length > 0 ? imagePreviews.map((p) => p.base64) : [];
     const mainImage = images[0] ?? PLACEHOLDER;
 
-    const updatedProduct: Product = {
-      id: selectedProduct.id,
+    const updateFields = {
       name: values.name,
-      description: values.description || "Product description",
+      description: values.description || "New product added",
       price: Number(values.price),
       currency: values.currency,
       rating: Number(values.rating || 0) || 0,
       image: mainImage,
-      images: images.length ? images : [PLACEHOLDER],
       category: values.category,
-      tags,
-      colors,
-      materials,
-      features,
-      specification,
     };
 
-    dispatch(updateProduct(updatedProduct));
-    alert("Producto actualizado correctamente");
-    setSelectedProductId(null);
+    const { data, error } = await supabase
+      .from('products')
+      .update(updateFields)
+      .eq('id', selectedProduct.id);
+
+    if (error) {
+      alert('Error actualizando en Supabase: ' + error.message);
+    } else {
+      alert('Producto actualizado');
+      setSelectedProductId(null);
+      fetchProducts();
+    }
   }
 
-  function handleDelete() {
+  async function handleDelete() {
     if (!selectedProduct) return;
 
     if (window.confirm(`¿Estás seguro de eliminar "${selectedProduct.name}"?`)) {
-      dispatch(removeProduct(selectedProduct.id));
-      alert("Producto eliminado");
-      setSelectedProductId(null);
+      const { error } = await supabase.from('products').delete().eq('id', selectedProduct.id);
+      if (error) {
+        alert('Error eliminando en Supabase: ' + error.message);
+      } else {
+        alert("Producto eliminado");
+        setSelectedProductId(null);
+        fetchProducts();
+      }
     }
   }
 
@@ -247,18 +281,22 @@ const EditProduct: React.FC = () => {
             <label className="block text-lg font-semibold mb-3 text-[#0A0F1C]">
               Select product to edit *
             </label>
-            <select
-              value={selectedProductId ?? ""}
-              onChange={(e) => setSelectedProductId(Number(e.target.value) || null)}
-              className="w-full border-2 border-blue-300 rounded-md px-4 py-3 text-base font-medium focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="">-- Select a product --</option>
-              {allProducts.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.name} - {p.currency} {p.price}
-                </option>
-              ))}
-            </select>
+            {loadingProducts ? (
+              <div className="text-gray-500">Loading products...</div>
+            ) : (
+              <select
+                value={selectedProductId ?? ""}
+                onChange={(e) => setSelectedProductId(Number(e.target.value) || null)}
+                className="w-full border-2 border-blue-300 rounded-md px-4 py-3 text-base font-medium focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="">-- Select a product --</option>
+                {allProducts.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name} - {p.currency} {p.price}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
 
           {!selectedProduct ? (
