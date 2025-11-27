@@ -1,35 +1,53 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "../../../utils/supabaseClient";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [staySignedIn, setStaySignedIn] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
 
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const user = users.find((u: { email: string; password: string }) => 
-      u.email === email && u.password === password
-    );
+    try {
+      const { data, error: signInError } =
+        await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
 
-    if (user) {
-      if (staySignedIn) {
-        localStorage.setItem("currentUser", JSON.stringify({ 
-          email: user.email,
-          username: user.username 
-        }));
-      } else {
-        sessionStorage.setItem("currentUser", JSON.stringify({ 
-          email: user.email,
-          username: user.username 
-        }));
+      if (signInError) {
+        setError(signInError.message || "Invalid email or password");
+        setLoading(false);
+        return;
       }
-    } else {
-      setError("Invalid email or password");
+
+      const user = data.user;
+      if (!user) {
+        setError("Login failed. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      if (staySignedIn) {
+        await supabase
+          .from("profiles")
+          .update({ stay_signed_in: true })
+          .eq("id", user.id);
+      }
+
+      navigate("/home");
+    } catch (err) {
+      setError("Login failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -76,7 +94,10 @@ const Login = () => {
               onChange={(e) => setStaySignedIn(e.target.checked)}
               className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
             />
-            <label htmlFor="staySignedIn" className="ml-2 text-sm text-gray-600">
+            <label
+              htmlFor="staySignedIn"
+              className="ml-2 text-sm text-gray-600"
+            >
               Stay signed in
             </label>
           </div>
@@ -86,20 +107,19 @@ const Login = () => {
               {error}
             </p>
           )}
-          
-          <NavLink to="/home">
+
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-4 rounded-xl font-semibold hover:bg-blue-600 transition-colors"
+            disabled={loading}
+            className="w-full bg-blue-500 text-white py-4 rounded-xl font-semibold hover:bg-blue-600 transition-colors disabled:opacity-60"
           >
-            Next
+            {loading ? "Signing in..." : "Next"}
           </button>
-          </NavLink>
 
           <div className="flex items-center justify-between mt-4">
             <button
               type="button"
-              onClick={() => navigate("/register")}
+              onClick={() => navigate("/SignIn")}
               className="text-sm text-gray-600 hover:underline"
             >
               Create account

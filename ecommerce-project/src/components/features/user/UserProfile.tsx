@@ -65,10 +65,11 @@ const AccountPage: React.FC = () => {
 
         
           <nav className="divide-y divide-gray-200">
+            <Row to="/profile" label="Profile" divider />
             <Row to="/ReviewWindow" label="Reviews" divider />
-            <Row to="/Chats" label="Chats" divider />
-            <Row to="/Productform" label="Add Product" divider />
-            <Row to="/ProductEdit" label="Edit Product" divider />
+            <Row to="/chats" label="Chats" divider />
+            <Row to="/productform" label="Add Product" divider />
+            <Row to="/productedit" label="Edit Product" divider />
             <Row to="/logout" label="Log out" danger />
           </nav>
         </div>

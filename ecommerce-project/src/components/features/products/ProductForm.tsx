@@ -141,8 +141,8 @@ const AddProductForm: React.FC = () => {
       price: Number(values.price),
       currency: values.currency,
       rating: Number(values.rating || 0) || 0,
-      image: mainImage,                          // imagen principal en Base64
-      images: images.length ? images : [PLACEHOLDER],  // galería en Base64
+      image: mainImage,                      
+      images: images.length ? images : [PLACEHOLDER],  
       category: values.category,
       tags,
       colors,
@@ -151,14 +151,12 @@ const AddProductForm: React.FC = () => {
       specification,
     };
 
-    // Insertar en Supabase
     const { data, error } = await supabase.from('products').insert([newProduct]);
     if (error) {
       alert("Error al guardar en Supabase: " + error.message);
       return;
     }
 
-    // reset
     setValues({
       name: "",
       price: "",

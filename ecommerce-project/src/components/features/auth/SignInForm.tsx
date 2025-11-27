@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../../../utils/supabaseClient";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -8,7 +9,10 @@ const SignIn = () => {
     confirmPassword: "",
     username: ""
   });
+
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,10 +24,9 @@ const SignIn = () => {
     setError("");
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    // Validaciones básicas
+
     if (!formData.email.includes("@")) {
       setError("Please enter a valid email");
       return;
@@ -39,25 +42,40 @@ const SignIn = () => {
       return;
     }
 
-    // Verificar si el usuario ya existe
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    if (users.some((u: {email: string}) => u.email === formData.email)) {
-      setError("Email already registered");
-      return;
-    }
+    setLoading(true);
+    setError("");
 
-    // Guardar nuevo usuario
     try {
-      const newUser = {
+      const { data, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
-        username: formData.username
-      };
-      localStorage.setItem("users", JSON.stringify([...users, newUser]));
-      alert("Account created successfully!");
-      navigate("/login"); // Redirige al login después de registrar
+        options: {
+          data: {
+            username: formData.username, 
+          },
+        },
+      });
+
+      if (signUpError) {
+        setError(signUpError.message);
+        setLoading(false);
+        return;
+      }
+
+      const user = data.user;
+      if (!user) {
+        setError("Registration failed. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      alert("Account created! Please check your email to verify your account.");
+      navigate("/Login"); 
     } catch (err) {
+      console.error(err);
       setError("Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -124,16 +142,17 @@ const SignIn = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-4 rounded-xl font-semibold hover:bg-blue-600 transition-colors"
+            disabled={loading}
+            className="w-full bg-blue-500 text-white py-4 rounded-xl font-semibold hover:bg-blue-600 transition-colors disabled:opacity-60"
           >
-            Create Account
+            {loading ? "Creating account..." : "Create Account"}
           </button>
 
           <p className="text-center text-sm text-gray-600">
             Already have an account?{" "}
             <button
               type="button"
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/Login")}
               className="text-blue-500 hover:underline font-medium"
             >
               Sign in
