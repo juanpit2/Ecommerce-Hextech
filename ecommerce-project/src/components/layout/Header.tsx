@@ -92,7 +92,7 @@ function Navbar() {
           <div className="px-4 pb-4 pt-2 border-t border-gray-100 bg-white">
             {/* Secciones desplegables (móvil) */}
             <div className="space-y-2">
-              <NavLink to="/products" className="block py-2 font-semibold text-gray-800">Products</NavLink>
+              <NavLink to="/piltover" className="block py-2 font-semibold text-gray-800">Products</NavLink>
 
               <NavLink to="/piltover" className="block py-2 font-semibold text-gray-800">Piltover</NavLink>
                
