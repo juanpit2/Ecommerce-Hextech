@@ -1,0 +1,20 @@
+[
+  {
+    "id": 7,
+    "name": "Atlas Gauntlets",
+    "description": "Boost your strength with Hextech power. Raw force in a single punch.",
+    "price": 9800,
+    "currency": "GLD",
+    "quantity": 1,
+    "image": "/public/images/Card-guante.png"
+  },
+  {
+    "id": 12,
+    "name": "Bombo-bang Tm",
+    "description": "Boost your strength with Hextech power. Raw force in a single punch.",
+    "price": 3800,
+    "currency": "GLD",
+    "quantity": 1,
+    "image": "/public/images/card-bombo.png"
+  }
+]
