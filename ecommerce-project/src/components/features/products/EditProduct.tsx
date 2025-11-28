@@ -4,6 +4,8 @@ import { supabase } from '../../../utils/supabaseClient';
 import type { Product } from "../../../Type/ProductView";
 
 const PLACEHOLDER = "/images/placeholder.png";
+const MAX_FILE_SIZE = 2 * 1024 * 1024;
+const MAX_FILE_SIZE_MB = 2;
 
 const fileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -205,9 +207,25 @@ const EditProduct: React.FC = () => {
   };
 
   async function handleFiles(newFiles: FileList | File[]) {
-    const accepted = Array.from(newFiles).filter((f) => f.type.startsWith("image/"));
+    const filesArray = Array.from(newFiles);
+    
+    // Validar que sean imágenes
+    const imageFiles = filesArray.filter((f) => f.type.startsWith("image/"));
+    
+    // Validar tamaño de archivo
+    const oversizedFiles = imageFiles.filter((f) => f.size > MAX_FILE_SIZE);
+    if (oversizedFiles.length > 0) {
+      alert(
+        `Las siguientes imágenes exceden el tamaño máximo de ${MAX_FILE_SIZE_MB}MB:\n` +
+        oversizedFiles.map((f) => `- ${f.name} (${(f.size / 1024 / 1024).toFixed(2)}MB)`).join("\n") +
+        "\n\nPor favor, reduce el tamaño de las imágenes antes de subirlas."
+      );
+      return;
+    }
+    
+    const accepted = imageFiles.slice(0, 6 - imagePreviews.length);
     const newPreviews = await Promise.all(
-      accepted.slice(0, 6 - imagePreviews.length).map(async (file) => ({
+      accepted.map(async (file) => ({
         name: file.name,
         url: URL.createObjectURL(file),
         base64: await fileToBase64(file),
