@@ -118,21 +118,36 @@ const EditProduct: React.FC = () => {
       specValue: "",
     });
 
-    setTags(selectedProduct.tags ?? []);
-    setColors(selectedProduct.colors ?? []);
-    setMaterials(selectedProduct.materials ?? []);
-    setFeatures(selectedProduct.features ?? []);
-
-    const normalizedSpec: Record<string, string> = {};
-    const spec = selectedProduct.specification ?? {};
-    Object.entries(spec).forEach(([key, value]) => {
-      if (value !== undefined) {
-        normalizedSpec[key] = value;
+    // Normalizar arrays si vienen como string de Supabase
+    const safeParse = (v: any): string[] => {
+      if (Array.isArray(v)) return v;
+      if (typeof v === 'string') {
+        try {
+          const parsed = JSON.parse(v);
+          return Array.isArray(parsed) ? parsed : [];
+        } catch { return []; }
       }
-    });
-    setSpecification(normalizedSpec);
+      return [];
+    };
 
-    const existingImages = selectedProduct.images ?? (selectedProduct.image ? [selectedProduct.image] : []);
+    // Normalizar objeto si viene como string de Supabase
+    const safeObj = (v: any): Record<string, string> => {
+      if (typeof v === 'object' && v !== null) return v;
+      if (typeof v === 'string') {
+        try { return JSON.parse(v); } catch { return {}; }
+      }
+      return {};
+    };
+
+    setTags(safeParse(selectedProduct.tags));
+    setColors(safeParse(selectedProduct.colors));
+    setMaterials(safeParse(selectedProduct.materials));
+    setFeatures(safeParse(selectedProduct.features));
+    setSpecification(safeObj(selectedProduct.specification));
+
+    const existingImages = safeParse(selectedProduct.images).length > 0 
+      ? safeParse(selectedProduct.images) 
+      : (selectedProduct.image ? [selectedProduct.image] : []);
     setImagePreviews(
       existingImages.map((img, idx) => ({
         name: `existing-${idx}`,
@@ -236,10 +251,16 @@ const EditProduct: React.FC = () => {
       currency: values.currency,
       rating: Number(values.rating || 0) || 0,
       image: mainImage,
+      images: images, // Todas las imágenes
       category: values.category,
+      tags: tags, // Tags actualizados
+      colors: colors, // Colores actualizados
+      materials: materials, // Materiales actualizados
+      features: features, // Características actualizadas
+      specification: specification, // Especificaciones actualizadas
     };
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('products')
       .update(updateFields)
       .eq('id', selectedProduct.id);
@@ -247,7 +268,12 @@ const EditProduct: React.FC = () => {
     if (error) {
       alert('Error actualizando en Supabase: ' + error.message);
     } else {
-      alert('Producto actualizado');
+      alert('Producto actualizado correctamente. Todos los campos han sido guardados.');
+      
+      // Notificar a otras páginas que el producto se actualizó
+      const { productUpdateManager } = await import('../../../utils/productUpdateManager');
+      productUpdateManager.notifyUpdate(selectedProduct.id);
+      
       setSelectedProductId(null);
       fetchProducts();
     }

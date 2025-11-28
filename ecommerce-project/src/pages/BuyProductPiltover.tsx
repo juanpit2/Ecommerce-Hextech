@@ -5,8 +5,9 @@ import { supabase } from "../utils/supabaseClient";
 import ProductSection from "../components/features/products/ProductSection";
 import Navbar from '../components/layout/Header'
 import Footer from "../components/layout/Footer";
-// review list removed from product detail — product-specific reviews are shown inside ProductSection
 import Benefits from "../components/features/products/ProductBenefits";
+import ProductReviewSection from "../components/features/reviews/ProductReviewSection";
+import { productUpdateManager } from "../utils/productUpdateManager";
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -55,7 +56,18 @@ export default function ProductDetailPage() {
       }
       setLoading(false);
     }
+    
     if (productId) fetchProduct();
+
+    // Suscribirse a actualizaciones del producto
+    const unsubscribe = productUpdateManager.subscribe((updatedProductId) => {
+      if (updatedProductId === productId) {
+        console.log('Producto actualizado, refrescando datos...');
+        fetchProduct();
+      }
+    });
+
+    return unsubscribe;
   }, [productId]);
 
   if (loading) {
@@ -74,7 +86,9 @@ export default function ProductDetailPage() {
   return (
     <>
       <Navbar />
-  <ProductSection product={product as any} />
+      <ProductSection product={product as any} />
+      {/* Reviews fuera del contenedor de compra, arriba de los círculos */}
+      <ProductReviewSection productId={product.id} />
       <Benefits />
       <Footer />
     </>

@@ -1,7 +1,6 @@
 
 
 import React, { useState } from "react";
-import ProductReviews from "../reviews/ProductReviews";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../store/cartSlice";
 import type { Product } from "../../../Type/ProductView";
@@ -209,8 +208,6 @@ const ProductSection: React.FC<Props> = ({ product }) => {
           </div>
         </div>
       </div>
-      {/* Reviews for this product */}
-      <ProductReviews productId={product.id} />
     </section>
   );
 };
