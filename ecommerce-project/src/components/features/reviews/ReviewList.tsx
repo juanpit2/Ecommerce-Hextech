@@ -1,27 +1,39 @@
 import React, { useRef, useState, useEffect } from "react";
 import ReviewCard from "./ReviewCard";
 import ReviewForm from "./ReviewForm";
-import reviewsData from "../../data/reviews.json";
-
-// Tipo para cada reseña proveniente del JSON
-type Review = {
-  id: string;         // Identificador único de la reseña
-  name: string;       // Nombre del autor de la reseña
-  rating: number;     // Calificación (0–5)
-  description: string;// Texto de la reseña
-};
-
-// Normaliza el JSON tipándolo como arreglo de Review
-const reviews: Review[] = reviewsData as Review[];
+import { getAllReviews } from "../../../utils/reviewsService";
+import type { ReviewCard as ReviewCardType } from "../../../Type/Reviews";
 
 // Lista de reseñas con carrusel horizontal y paginación por "snap"
 const ReviewList: React.FC = () => {
+  // Estado para las reviews cargadas desde Supabase
+  const [reviews, setReviews] = useState<ReviewCardType[]>([]);
+  const [loading, setLoading] = useState(true);
+  
   // Referencia al contenedor scrollable
   const containerRef = useRef<HTMLDivElement | null>(null);
   // Referencias a cada item para medir su ancho (incluyendo gap)
   const itemRefs = useRef<HTMLDivElement[]>([]);
   // Índice activo (para los dots/puntos indicadores)
   const [active, setActive] = useState(0);
+
+  // Cargar reviews desde Supabase al montar el componente
+  useEffect(() => {
+    const loadReviews = async () => {
+      try {
+        setLoading(true);
+        const result = await getAllReviews();
+        if (result.data) {
+          setReviews(result.data);
+        }
+      } catch (error) {
+        console.error("Error loading reviews:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadReviews();
+  }, []);
 
   // Sincroniza el índice activo con la posición de scroll del contenedor
   useEffect(() => {
@@ -39,7 +51,25 @@ const ReviewList: React.FC = () => {
     // Forza el cálculo al montar para inicializar el indicador
     onScroll();
     return () => c.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [reviews]);
+
+  if (loading) {
+    return (
+      <section className="px-6 py-8">
+        <h2 className="text-2xl font-bold mb-6">User reviews</h2>
+        <div className="text-center py-8 text-gray-500">Cargando reviews...</div>
+      </section>
+    );
+  }
+
+  if (reviews.length === 0) {
+    return (
+      <section className="px-6 py-8">
+        <h2 className="text-2xl font-bold mb-6">User reviews</h2>
+        <div className="text-center py-8 text-gray-500">No hay reviews disponibles.</div>
+      </section>
+    );
+  }
 
   return (
     <section className="px-6 py-8">

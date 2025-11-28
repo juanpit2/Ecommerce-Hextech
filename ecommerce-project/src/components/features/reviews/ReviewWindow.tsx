@@ -1,11 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReviewForm from './ReviewForm';
 import reviewsData from '../../data/reviews.json';
 import type { ReviewCard } from '../../../Type/Reviews';
+import { getAllReviews } from '../../../utils/reviewsService';
 
 const ReviewWindow = () => {
-  const [reviews, setReviews] = useState<ReviewCard[]>(reviewsData);
+  const [reviews, setReviews] = useState<ReviewCard[]>([]);
   const [showForm, setShowForm] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      const { data, error } = await getAllReviews();
+      if (!mounted) return;
+      if (error || !data) {
+        // fallback to local data
+        setReviews(reviewsData as ReviewCard[]);
+      } else {
+        setReviews(data);
+      }
+    })();
+    return () => { mounted = false; };
+  }, []);
 
   const handleAddReview = (newReview: ReviewCard) => {
     setReviews(prev => [newReview, ...prev]);

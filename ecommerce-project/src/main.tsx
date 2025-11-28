@@ -22,6 +22,7 @@ import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./routes/PrivateRoute";
 import ProfilePage from "./pages/ProfilePage.tsx";
 import LogOutPage from "./pages/LogOutPage.tsx";
+import ReviewWindow from "./components/features/reviews/ReviewWindow.tsx";
 
 const router = createBrowserRouter([
   {
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
         path: "/productform",
         element: <ProductForm />,
       },
+       {
+    path: "/ReviewWindow",
+    element: <ReviewWindow/>,
+  },
       
     ],
   },

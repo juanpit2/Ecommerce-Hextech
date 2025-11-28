@@ -1,29 +1,59 @@
-import { useState } from 'react';
-import type { ReviewCard } from '../../../Type/Reviews';
+import { useEffect, useState } from 'react';
+import type { ReviewCard, ReviewInput } from '../../../Type/Reviews';
+import { createReview } from '../../../utils/reviewsService';
+import { supabase } from '../../../utils/supabaseClient';
+import { useAuth } from '../../../context/AuthContext';
 
 type ReviewFormProps = {
     onAddReview: (review: ReviewCard) => void;
     onClose: () => void;
+    // si se abre desde la página de producto, se puede pasar el id para asignarla directamente
+    productId?: number | null;
 };
 
-const ReviewForm: React.FC<ReviewFormProps> = ({ onAddReview, onClose }) => {
-    const [formData, setFormData] = useState({
+const ReviewForm: React.FC<ReviewFormProps> = ({ onAddReview, onClose, productId: propsProductId }) => {
+    const [formData, setFormData] = useState<{ name: string; rating: number; description: string; product_id?: number | ''}>({
     name: '',
     rating: 5,
-    description: ''
+    description: '',
+    product_id: propsProductId ?? ''
     });
     const [error, setError] = useState('');
+
+        // Productos cargados desde la base de datos
+        const [products, setProducts] = useState<Array<{ id: number; name: string }>>([]);
+        const { user } = useAuth();
+
+        useEffect(() => {
+            let mounted = true;
+            (async () => {
+                try {
+                    const { data, error } = await supabase.from('products').select('id,name');
+                    if (!mounted) return;
+                    if (error) {
+                        console.warn('Could not load products from Supabase, falling back to empty list', error);
+                        setProducts([]);
+                    } else {
+                        setProducts((data as any[]) ?? []);
+                    }
+                } catch (err) {
+                    console.error('Failed to fetch products', err);
+                    if (mounted) setProducts([]);
+                }
+            })();
+            return () => { mounted = false; };
+        }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
         ...prev,
-        [name]: name === 'rating' ? parseFloat(value) : value
+        [name]: name === 'rating' ? parseFloat(value) : name === 'product_id' ? (value === '' ? '' : parseInt(value)) : value
     }));
     setError('');
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Validaciones
@@ -42,16 +72,43 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onAddReview, onClose }) => {
         return;
     }
 
-    // Crear nueva review
-    const newReview: ReviewCard = {
-        id: Date.now().toString(),
-        name: formData.name,
-        rating: formData.rating,
-        description: formData.description
-    };
+    // validar producto seleccionado
+    if (!formData.product_id) {
+        setError('Please select a product to review');
+        return;
+    }
 
-    onAddReview(newReview);
-    setFormData({ name: '', rating: 5, description: '' });
+            // Si tu tabla de reviews requiere usuario autenticado, forzamos login antes de intentar crear
+            if (!user) {
+                setError('You must be logged in to submit a review');
+                return;
+            }
+
+            // Construir payload para la DB (hay usuario autenticado, añadimos user_id y usamos su nombre si existe)
+        const payload: ReviewInput = {
+                product_id: typeof formData.product_id === 'number' ? formData.product_id : null,
+                user_id: user?.id ?? null,
+                user_name: user?.user_metadata?.full_name ?? formData.name,
+                rating: formData.rating,
+                comment: formData.description,
+        };
+
+        // Intentar persistir en Supabase y mostrar error real si existe
+        try {
+            const { data, error: createErr } = await createReview(payload);
+            if (createErr || !data) {
+                console.error('createReview error', createErr);
+                setError((createErr && (createErr.message || JSON.stringify(createErr))) || 'Failed to save review. Please try again.');
+                return;
+            }
+
+            onAddReview(data);
+            setFormData({ name: '', rating: 5, description: '', product_id: propsProductId ?? '' });
+            } catch (err: any) {
+                console.error('Unexpected error creating review', err);
+                setError(err?.message ?? String(err) ?? 'Failed to save review.');
+                return;
+            }
     };
 
     return (
@@ -67,7 +124,24 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ onAddReview, onClose }) => {
             </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    {/* Product selector */}
+                        {!propsProductId && (
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Product</label>
+                                <select
+                                    name="product_id"
+                                    value={formData.product_id as any}
+                                    onChange={handleChange}
+                                    className="w-full px-4 py-2 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                >
+                                    <option value="">Select product...</option>
+                                    {products.map((p) => (
+                                        <option key={p.id} value={p.id}>{p.name}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
           {/* Nombre */}
             <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">

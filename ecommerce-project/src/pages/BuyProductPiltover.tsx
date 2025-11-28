@@ -5,7 +5,7 @@ import { supabase } from "../utils/supabaseClient";
 import ProductSection from "../components/features/products/ProductSection";
 import Navbar from '../components/layout/Header'
 import Footer from "../components/layout/Footer";
-import ReviewList from "../components/features/reviews/ReviewList";
+// review list removed from product detail — product-specific reviews are shown inside ProductSection
 import Benefits from "../components/features/products/ProductBenefits";
 
 export default function ProductDetailPage() {
@@ -74,8 +74,7 @@ export default function ProductDetailPage() {
   return (
     <>
       <Navbar />
-      <ProductSection product={product as any} />
-      <ReviewList />
+  <ProductSection product={product as any} />
       <Benefits />
       <Footer />
     </>

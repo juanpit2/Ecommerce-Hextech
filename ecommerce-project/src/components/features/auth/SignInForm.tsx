@@ -56,15 +56,33 @@ const SignIn = () => {
         },
       });
 
+      console.log('SignUp response:', { data, signUpError });
+
       if (signUpError) {
-        setError(signUpError.message);
+        // Detectar caso de correo ya en uso y mostrar mensaje claro
+        const msg = signUpError.message?.toLowerCase() || '';
+        if (msg.includes('already registered') || msg.includes('already exists') || msg.includes('user already')) {
+          setError('This email is already in use. Please sign in or use a different email.');
+        } else {
+          setError(signUpError.message);
+        }
         setLoading(false);
         return;
       }
 
+      // Verificar si realmente se creó el usuario
       const user = data.user;
+      
+      // Si no hay usuario O si Supabase indica que ya existe (identities vacío puede indicar usuario existente)
       if (!user) {
-        setError("Registration failed. Please try again.");
+        setError("Registration failed. This email may already be in use. Please try signing in.");
+        setLoading(false);
+        return;
+      }
+
+      // Verificar si el usuario ya existía (identities puede estar vacío en ese caso)
+      if (data.user && data.user.identities && data.user.identities.length === 0) {
+        setError("This email is already registered. Please sign in instead.");
         setLoading(false);
         return;
       }
@@ -74,6 +92,7 @@ const SignIn = () => {
     } catch (err) {
       console.error(err);
       setError("Registration failed. Please try again.");
+      setLoading(false);
     } finally {
       setLoading(false);
     }
