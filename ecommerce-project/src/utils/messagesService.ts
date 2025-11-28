@@ -1,6 +1,12 @@
+// Servicio de Mensajes y Chats - Gestion completa del sistema de chat
+// Maneja operaciones CRUD para chats y mensajes
+// Incluye suscripciones en tiempo real para chat instantaneo
+
 import { supabase } from './supabaseClient';
 
-// Tipos
+// === DEFINICION DE TIPOS ===
+
+// Tipo para un mensaje individual completo (leido de BD)
 export type Message = {
   id: string;
   chat_id: string;
@@ -10,6 +16,7 @@ export type Message = {
   created_at: string;
 };
 
+// Tipo para crear un nuevo mensaje (payload de insercion)
 export type MessageInput = {
   chat_id: string;
   sender_id: string;
@@ -17,6 +24,7 @@ export type MessageInput = {
   message_text: string;
 };
 
+// Tipo para un chat de usuario (conversacion)
 export type UserChat = {
   id: string;
   user_id: string;
@@ -25,22 +33,25 @@ export type UserChat = {
   updated_at: string;
 };
 
+// Tipo para crear un nuevo chat
 export type UserChatInput = {
   user_id: string;
   chat_name: string;
 };
 
-// ===== CHATS =====
+// ===== FUNCIONES DE GESTION DE CHATS =====
 
-/**
- * Obtener todos los chats del usuario autenticado
- */
+// Obtener todos los chats del usuario autenticado
+// RLS (Row Level Security) filtra automaticamente por user_id
+// Retorna chats ordenados por ultima actualizacion
 export async function getUserChats(): Promise<{ data?: UserChat[]; error?: any }> {
   try {
+    // Consulta a tabla users_chats
+    // RLS asegura que solo se obtienen chats del usuario actual
     const { data, error } = await supabase
       .from('users_chats')
       .select('*')
-      .order('updated_at', { ascending: false });
+      .order('updated_at', { ascending: false });  // Mas recientes primero
 
     if (error) return { error };
     return { data: (data || []) as UserChat[] };
@@ -49,11 +60,12 @@ export async function getUserChats(): Promise<{ data?: UserChat[]; error?: any }
   }
 }
 
-/**
- * Crear un nuevo chat para el usuario autenticado
- */
+// Crear un nuevo chat para el usuario autenticado
+// Parametro: input - Datos del chat (user_id, chat_name)
+// Retorna: el chat creado
 export async function createUserChat(input: UserChatInput): Promise<{ data?: UserChat; error?: any }> {
   try {
+    // Insertar nueva fila en users_chats
     const { data, error } = await supabase
       .from('users_chats')
       .insert([input])
@@ -67,11 +79,11 @@ export async function createUserChat(input: UserChatInput): Promise<{ data?: Use
   }
 }
 
-/**
- * Obtener un chat específico por ID
- */
+// Obtener un chat especifico por su ID
+// Util para validar acceso o cargar detalles
 export async function getUserChatById(chatId: string): Promise<{ data?: UserChat; error?: any }> {
   try {
+    // Buscar chat por ID (RLS valida que pertenece al usuario)
     const { data, error } = await supabase
       .from('users_chats')
       .select('*')
@@ -85,11 +97,12 @@ export async function getUserChatById(chatId: string): Promise<{ data?: UserChat
   }
 }
 
-/**
- * Eliminar un chat (solo el propietario puede hacerlo)
- */
+// Eliminar un chat por ID
+// Solo el propietario puede borrar (validado por RLS)
+// Nota: si hay ON DELETE CASCADE, tambien borra mensajes asociados
 export async function deleteUserChat(chatId: string): Promise<{ error?: any }> {
   try {
+    // Borrar chat de la tabla
     const { error } = await supabase
       .from('users_chats')
       .delete()
@@ -102,18 +115,19 @@ export async function deleteUserChat(chatId: string): Promise<{ error?: any }> {
   }
 }
 
-// ===== MESSAGES =====
+// ===== FUNCIONES DE GESTION DE MENSAJES =====
 
-/**
- * Obtener todos los mensajes de un chat específico
- */
+// Obtener todos los mensajes de un chat especifico
+// Parametro: chatId - ID del chat a consultar
+// Retorna: array de mensajes ordenados cronologicamente
 export async function getMessagesByChat(chatId: string): Promise<{ data?: Message[]; error?: any }> {
   try {
+    // Consulta filtrada por chat_id (foreign key)
     const { data, error } = await supabase
       .from('messages')
       .select('*')
-      .eq('chat_id', chatId)
-      .order('created_at', { ascending: true });
+      .eq('chat_id', chatId)  // Solo mensajes de este chat
+      .order('created_at', { ascending: true });  // Orden cronologico
 
     if (error) return { error };
     return { data: (data || []) as Message[] };
@@ -122,11 +136,12 @@ export async function getMessagesByChat(chatId: string): Promise<{ data?: Messag
   }
 }
 
-/**
- * Insertar un nuevo mensaje en un chat
- */
+// Insertar un nuevo mensaje en un chat
+// Parametro: input - Datos del mensaje (chat_id, sender_id, message_text, etc)
+// Retorna: el mensaje creado
 export async function createMessage(input: MessageInput): Promise<{ data?: Message; error?: any }> {
   try {
+    // Insertar mensaje en tabla messages
     const { data, error } = await supabase
       .from('messages')
       .insert([input])
@@ -140,9 +155,8 @@ export async function createMessage(input: MessageInput): Promise<{ data?: Messa
   }
 }
 
-/**
- * Eliminar un mensaje específico
- */
+// Eliminar un mensaje especifico por ID
+// Util para permitir a usuarios borrar sus propios mensajes
 export async function deleteMessage(messageId: string): Promise<{ error?: any }> {
   try {
     const { error } = await supabase
@@ -157,30 +171,35 @@ export async function deleteMessage(messageId: string): Promise<{ error?: any }>
   }
 }
 
-/**
- * Suscribirse a nuevos mensajes en un chat (realtime)
- */
+// Suscripcion en tiempo real a nuevos mensajes de un chat
+// Permite chat instantaneo sin polling
+// Parametros:
+//   - chatId: ID del chat a monitorear
+//   - callback: Funcion que se ejecuta al recibir mensaje nuevo
+// Retorna: objeto de suscripcion (o null si falla)
 export function subscribeToMessages(
   chatId: string,
   callback: (message: Message) => void
 ): any {
   try {
+    // Crear canal especifico para este chat
     const subscription = supabase
-      .channel(`messages:${chatId}`)
+      .channel(`messages:${chatId}`)  // Canal unico por chat
       .on(
         'postgres_changes',
         {
-          event: 'INSERT',
+          event: 'INSERT',  // Solo escuchar inserts
           schema: 'public',
           table: 'messages',
-          filter: `chat_id=eq.${chatId}`,
+          filter: `chat_id=eq.${chatId}`,  // Filtro: solo mensajes de este chat
         },
         (payload) => {
+          // payload.new contiene el mensaje recien insertado
           const newMsg = payload.new as Message;
-          callback(newMsg);
+          callback(newMsg);  // Ejecutar callback con el mensaje
         }
       )
-      .subscribe();
+      .subscribe();  // Activar suscripcion
 
     return subscription;
   } catch (err) {
